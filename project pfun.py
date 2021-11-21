@@ -91,8 +91,8 @@ while a:
     # yaxis-=0.1
     redrawWindow()
     #clock.tick(speed)
-    bgY -= 1.4
-    bgY2 -= 1.4
+    bgY -= 5
+    bgY2 -= 5
     
     if bgY<bg.get_height()*-1:
         bgY=bg.get_height()
@@ -140,8 +140,8 @@ while a:
 
     obstacle(obs6,xobs,yobs)
     yobs+=ycobs
-    if yobs>=625:
-        yobs=625
+    # if yobs>=625:
+    #     yobs=625
 
     if ybullet<=0:
         bullet_state='hold'
