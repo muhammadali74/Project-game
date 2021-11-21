@@ -19,6 +19,10 @@ car3=pygame.image.load('car3.png')      #<div>Icons made by <a href="https://www
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 
+bg=pygame.image.load('Road pic 1 filter.png')
+bgY=0
+bgY2=bg.get_height()
+
 car1=pygame.transform.scale(car1,(88,88))
 car2=pygame.transform.scale(car2,(88,88))
 car3=pygame.transform.scale(car3,(88,88))
@@ -40,15 +44,33 @@ yhangeobs=0
 
 def obstacle(img,xcor,ycor):
     screen.blit(img,((xcor,ycor)))
+    
+def redrawWindow():
+    win.blit(bg, (bgY,0))
+    win.blit(bg, (bgY2,0))
+    pygame.display.update()
 
 a=True
+speed=30
+pygame.time.set_timer(Event+1,500)  # speed changes after 500 milisecond
 while a:
     x=screen.fill((0,255,0))
     # xaxis-=0.1
     # yaxis-=0.1
+    redrawWindow()
+    bgY -= 1.4
+    bgY2 -= 1.4
+    
+    if bgY<bg.get_height()*-1:
+        bgY=bg.get_height()
+    if bgY2<bh.get_height()*-1:
+        bgY2=bg.get_height()
+        
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             a=False
+        if event.type==Event + 1:
+            speed +=1
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_ESCAPE:
                 a=False
@@ -66,6 +88,7 @@ while a:
                 xhange=0
             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                 yhange=0
+     clock.tick(speed)
                 
     xaxis+=xhange
     yaxis+=yhange
