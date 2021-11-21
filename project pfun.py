@@ -12,14 +12,17 @@ screen=pygame.display.set_mode([1080,720],HWSURFACE | DOUBLEBUF | RESIZABLE)
 caption=pygame.display.set_caption('Delta SpeedRun')
 icon=pygame.image.load('racing.png')
 pygame.display.set_icon(icon)
-
+    
 car1=pygame.image.load('car.png')       #<div>Icons made by <a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 car2=pygame.image.load('car2.png')      #<div>Icons made by <a href="https://www.flaticon.com/authors/berkahicon" title="berkahicon">berkahicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 car3=pygame.image.load('car3.png')      #<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 
-bg=pygame.image.load('Road pic 1 filter.jpg')
+#bg_dict={'Highway':xyz,.......}
+#x=input('Background selection')
+#bg=pygame.image.load(bg_dict.get(x))
+bg=pygame.image.load('background1.png')
 bgY=0
 bgY2=bg.get_height()
 
@@ -63,7 +66,7 @@ while a:
     
     if bgY<bg.get_height()*-1:
         bgY=bg.get_height()
-    if bgY2<bh.get_height()*-1:
+    if bgY2<bg.get_height()*-1:
         bgY2=bg.get_height()
         
     for event in pygame.event.get():
@@ -88,7 +91,7 @@ while a:
                 xhange=0
             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                 yhange=0
-    clock.tick(speed)
+     clock.tick(speed)
                 
     xaxis+=xhange
     yaxis+=yhange
