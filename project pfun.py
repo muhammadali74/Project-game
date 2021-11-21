@@ -59,17 +59,17 @@ def obstacle(img,xcor,ycor):
     screen.blit(img,(xcor,ycor))
 
 bullet=pygame.image.load('bullet.png')
-bullet=pygame.transform.scale(bullet,(32,32))
+bullet=pygame.transform.scale(bullet,(28,28))
 xbullet=0
 ybullet=yaxis
 xcbullet=0
-ycbullet=-4
+ycbullet=-10
 bullet_state='hold'
 
 def goli(image,xcor,ycor):
     global bullet_state
     bullet_state='fire'
-    screen.blit(image,(xcor+16,ycor+10))
+    screen.blit(image,(xcor+40,ycor+10))
 
 a=True
 while a:
@@ -91,8 +91,9 @@ while a:
                 yc=-5
             if event.key==pygame.K_DOWN:
                 yc=5
-            if event.key==pygame.K_SPACE:
-                goli(bullet, xaxis,yaxis)
+            if event.key==pygame.K_SPACE and bullet_state=='hold':
+                xbullet=xaxis
+                goli(bullet, xbullet,ybullet)
         
         if event.type==pygame.KEYUP:
             if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
@@ -110,16 +111,20 @@ while a:
         yaxis=0
     if yaxis>=625:
         yaxis=625
-    car(car1,xaxis,yaxis)
 
     obstacle(obs6,xobs,yobs)
     yobs+=ycobs
     if yobs>=625:
         yobs=625
 
+    if ybullet<=0:
+        bullet_state='hold'
+        ybullet=yaxis
     if bullet_state is 'fire':
-        goli(bullet,xaxis,ybullet)
+        goli(bullet,xbullet,ybullet)
         ybullet+=ycbullet
+
+    car(car1,xaxis,yaxis)
         
 
 
