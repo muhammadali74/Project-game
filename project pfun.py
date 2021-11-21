@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 import time
 import os
 import sys
@@ -14,10 +15,12 @@ icon=pygame.image.load('racing.png')
 pygame.display.set_icon(icon)
 
 fps=60
-clock=pygame.time.Clock
+clock=pygame.time.Clock()
 
-background=pygame.image.load('background1.png')
-background=pygame.transform.scale(background,(1080,720))
+bg=pygame.image.load('background1.png')
+bg=pygame.transform.scale(bg,(1080,720))
+bgY=0
+bgY2=bg.get_height()
 
 car1=pygame.image.load('car.png')       #<div>Icons made by <a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 car2=pygame.image.load('car2.png')      #<div>Icons made by <a href="https://www.flaticon.com/authors/berkahicon" title="berkahicon">berkahicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
@@ -34,8 +37,10 @@ xaxis = 500
 yaxis = 570
 xc=0
 yc=0
+
 def car(pic,xcor,ycor):
     screen.blit(pic,(xcor,ycor))
+    
 obs1=pygame.image.load('tree1.png')
 obs2=pygame.image.load('tree2.png')
 obs3=pygame.image.load('tree3.png')
@@ -58,6 +63,11 @@ ycobs=5
 def obstacle(img,xcor,ycor):
     screen.blit(img,(xcor,ycor))
 
+def redrawWindow():
+    screen.blit(bg,(0,bgY))
+    screen.blit(bg,(0,bgY2))
+    pygame.display.update()
+    
 bullet=pygame.image.load('bullet.png')
 bullet=pygame.transform.scale(bullet,(28,28))
 xbullet=0
@@ -71,15 +81,29 @@ def goli(image,xcor,ycor):
     bullet_state='fire'
     screen.blit(image,(xcor+40,ycor+10))
 
+speed=30
+pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
     x=screen.fill((0,99,0))
-    screen.blit(background,(0,0))
+    screen.blit(bg,(0,0))
     # xaxis-=0.1
     # yaxis-=0.1
+    redrawWindow()
+    #clock.tick(speed)
+    bgY -= 1.4
+    bgY2 -= 1.4
+    
+    if bgY<bg.get_height()*-1:
+        bgY=bg.get_height()
+    if bgY2<bg.get_height()*-1:
+        bgY2=bg.get_height()
+        
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             a=False
+        if event.type==USEREVENT+1:
+            speed +=1
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_ESCAPE:
                 a=False
@@ -100,6 +124,8 @@ while a:
                 xc=0
             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                 yc=0
+                
+    clock.tick(speed)
                 
     xaxis+=xc
     yaxis+=yc
