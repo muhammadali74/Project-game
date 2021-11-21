@@ -90,7 +90,7 @@ def goli(image,xcor,ycor):
     bullet_state='fire'
     screen.blit(image,(xcor+40,ycor+10))
 
-speed=30
+speed=120
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
@@ -99,7 +99,7 @@ while a:
     # xaxis-=0.1
     # yaxis-=0.1
     redrawWindow()
-    clock.tick(speed)
+    #clock.tick(speed)
     bgY += 5
     bgY2 +=5
     
@@ -134,7 +134,7 @@ while a:
             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                 yc=0
                 
-    #clock.tick(speed)
+    clock.tick(speed)
                 
     xaxis+=xc
     yaxis+=yc
