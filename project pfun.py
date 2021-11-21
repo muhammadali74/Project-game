@@ -19,7 +19,7 @@ car3=pygame.image.load('car3.png')      #<div>Icons made by <a href="https://www
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 
-bg=pygame.image.load('Road pic 1 filter.png')
+bg=pygame.image.load('Road pic 1 filter.jpg')
 bgY=0
 bgY2=bg.get_height()
 
