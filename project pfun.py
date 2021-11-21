@@ -88,7 +88,7 @@ while a:
                 xhange=0
             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                 yhange=0
-     clock.tick(speed)
+    clock.tick(speed)
                 
     xaxis+=xhange
     yaxis+=yhange
