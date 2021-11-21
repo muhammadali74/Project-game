@@ -13,37 +13,67 @@ caption=pygame.display.set_caption('Delta SpeedRun')
 icon=pygame.image.load('racing.png')
 pygame.display.set_icon(icon)
 
+clock=pygame.time.Clock
+
+background=pygame.image.load('background1.png')
+background=pygame.transform.scale(background,(1080,720))
+
 car1=pygame.image.load('car.png')       #<div>Icons made by <a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 car2=pygame.image.load('car2.png')      #<div>Icons made by <a href="https://www.flaticon.com/authors/berkahicon" title="berkahicon">berkahicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 car3=pygame.image.load('car3.png')      #<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 
-car1=pygame.transform.scale(car1,(88,88))
-car2=pygame.transform.scale(car2,(88,88))
-car3=pygame.transform.scale(car3,(88,88))
+#obstacle tree <a href="https://www.vecteezy.com/free-vector/tree">Tree Vectors by Vecteezy</a>
+
+car1=pygame.transform.scale(car1,(120,120))
+car2=pygame.transform.scale(car2,(120,120))
+car3=pygame.transform.scale(car3,(120,120))
 xaxis = 500
 yaxis = 570
-xhange=0
-yhange=0
-
+xc=0
+yc=0
 def car(pic,xcor,ycor):
     screen.blit(pic,(xcor,ycor))
+obs1=pygame.image.load('tree1.png')
+obs2=pygame.image.load('tree2.png')
+obs3=pygame.image.load('tree3.png')
+obs4=pygame.image.load('tree4.png')
+obs5=pygame.image.load('tree5.png')
+obs6=pygame.image.load('cones.png')
 
-car1=pygame.transform.scale(car1,(88,88))
-car2=pygame.transform.scale(car2,(88,88))
-car3=pygame.transform.scale(car3,(88,88))
-xobs = 500
-yobs = 50
-xhangeobs=0
-yhangeobs=0
+obs1=pygame.transform.scale(obs1,(54,54))
+obs2=pygame.transform.scale(obs2,(54,54))
+obs3=pygame.transform.scale(obs3,(54,54))
+obs4=pygame.transform.scale(obs4,(54,54))
+obs5=pygame.transform.scale(obs5,(54,54))
+obs6=pygame.transform.scale(obs6,(54,54))
+
+xobs = random.randint(0,1080)
+yobs = -100
+xcobs=5
+ycobs=5
 
 def obstacle(img,xcor,ycor):
-    screen.blit(img,((xcor,ycor)))
+    screen.blit(img,(xcor,ycor))
+
+bullet=pygame.image.load('bullet.png')
+bullet=pygame.transform.scale(bullet,(32,32))
+xbullet=0
+ybullet=yaxis
+xcbullet=0
+ycbullet=-4
+bullet_state='hold'
+
+def goli(image,xcor,ycor):
+    global bullet_state
+    bullet_state='fire'
+    screen.blit(image,(xcor+16,ycor+10))
 
 a=True
 while a:
-    x=screen.fill((0,255,0))
+    x=screen.fill((0,99,0))
+    screen.blit(background,(0,0))
     # xaxis-=0.1
     # yaxis-=0.1
     for event in pygame.event.get():
@@ -53,22 +83,24 @@ while a:
             if event.key==pygame.K_ESCAPE:
                 a=False
             if event.key==pygame.K_LEFT:
-                xhange=-0.2
+                xc=-5
             if event.key==pygame.K_RIGHT:
-                xhange=0.2
+                xc=5
             if event.key==pygame.K_UP:
-                yhange=-0.2
+                yc=-5
             if event.key==pygame.K_DOWN:
-                yhange=0.2
+                yc=5
+            if event.key==pygame.K_SPACE:
+                goli(bullet, xaxis,yaxis)
         
         if event.type==pygame.KEYUP:
             if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
-                xhange=0
+                xc=0
             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
-                yhange=0
+                yc=0
                 
-    xaxis+=xhange
-    yaxis+=yhange
+    xaxis+=xc
+    yaxis+=yc
     if xaxis<=0:
         xaxis=0
     if xaxis>=992:
@@ -79,7 +111,20 @@ while a:
         yaxis=625
     car(car1,xaxis,yaxis)
 
-    obstacle(car2,xobs,yobs)
+    obstacle(obs6,xobs,yobs)
+    yobs+=ycobs
+    if yobs>=625:
+        yobs=625
+
+    if bullet_state is 'fire':
+        goli(bullet,xaxis,ybullet)
+        ybullet+=ycbullet
+        
+        
+    
+
+
+
     pygame.display.update()
     # for i in range(255):
     #     x=screen.fill((0,i,0))
