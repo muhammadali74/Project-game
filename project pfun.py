@@ -13,6 +13,7 @@ caption=pygame.display.set_caption('Delta SpeedRun')
 icon=pygame.image.load('racing.png')
 pygame.display.set_icon(icon)
 
+fps=60
 clock=pygame.time.Clock
 
 background=pygame.image.load('background1.png')
@@ -120,8 +121,6 @@ while a:
         goli(bullet,xaxis,ybullet)
         ybullet+=ycbullet
         
-        
-    
 
 
 
