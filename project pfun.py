@@ -3,6 +3,7 @@ from pygame.locals import *
 import time
 import os
 import sys
+import math
 import random
 from pygame.constants import *
 from pygame.locals import *
@@ -66,7 +67,15 @@ def obstacle(img,xcor,ycor):
 def redrawWindow():
     screen.blit(bg,(0,bgY))
     screen.blit(bg,(0,bgY2))
-    pygame.display.update()
+    #pygame.display.update()
+
+def collission(x1,y1,x2,y2):
+    distance=math.sqrt((x1-x2)**2 + (y1-y2)**2)
+    print(distance)
+    if distance<50:
+        return True
+    else:
+        return False
     
 bullet=pygame.image.load('bullet.png')
 bullet=pygame.transform.scale(bullet,(28,28))
@@ -137,11 +146,17 @@ while a:
         yaxis=40
     if yaxis>=600:
         yaxis=600
-
+    
     obstacle(obs6,xobs,yobs)
     yobs+=ycobs
     # if yobs>=625:
     #     yobs=625
+
+    did_collide=collission(xaxis,yaxis,xobs,yobs)
+    if did_collide==True:
+        print(1)
+        xaxis=0
+        yaxis=0
 
     if ybullet<=0:
         bullet_state='hold'
