@@ -50,7 +50,7 @@ obs4=pygame.transform.scale(obs4,(54,54))
 obs5=pygame.transform.scale(obs5,(54,54))
 obs6=pygame.transform.scale(obs6,(54,54))
 
-xobs = random.randint(0,1080)
+xobs = random.randint(180,790)
 yobs = -100
 xcobs=5
 ycobs=5
@@ -103,14 +103,14 @@ while a:
                 
     xaxis+=xc
     yaxis+=yc
-    if xaxis<=0:
-        xaxis=0
-    if xaxis>=992:
-        xaxis=992
-    if yaxis<=0:
-        yaxis=0
-    if yaxis>=625:
-        yaxis=625
+    if xaxis<=180:
+        xaxis=180
+    if xaxis>=790:
+        xaxis=790
+    if yaxis<=40:
+        yaxis=40
+    if yaxis>=600:
+        yaxis=600
 
     obstacle(obs6,xobs,yobs)
     yobs+=ycobs
