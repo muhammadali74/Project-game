@@ -74,9 +74,9 @@ def obstacle(img,xcor,ycor):
     
 
 
-def redrawWindow():
-    screen.blit(bg,(0,bgY))
-    screen.blit(bg,(0,bgY2))
+def redrawWindow(background):
+    screen.blit(background,(0,bgY))
+    screen.blit(background,(0,bgY2))
     #pygame.display.update()
 
 def collission(x1,y1,x2,y2):
@@ -105,7 +105,7 @@ a=True
 while a:
     # x=screen.fill((0,99,0))
     # screen.blit(bg,(0,bgY2))
-    redrawWindow()
+    redrawWindow(bg)
     #clock.tick(speed)
     bgY += 5
     bgY2 +=5
@@ -126,8 +126,8 @@ while a:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             a=False
-        # if event.type==USEREVENT+1:
-            # speed +=5
+        if event.type==USEREVENT+1:
+            speed +=5
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_ESCAPE:
                 a=False
