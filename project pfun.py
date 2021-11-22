@@ -19,7 +19,9 @@ fps=60
 clock=pygame.time.Clock()
 
 bg=pygame.image.load('background1.png')
+bg2=pygame.image.load('Road pic 1 filter.jpg')
 bg=pygame.transform.scale(bg,(1080,720))
+bg2=pygame.transform.scale(bg2,(1080,720))
 bgY=0
 bgY2=bg.get_height()
 
@@ -71,7 +73,7 @@ def redrawWindow():
 
 def collission(x1,y1,x2,y2):
     distance=math.sqrt((x1-x2)**2 + (y1-y2)**2)
-    print(distance)
+    # print(distance)
     if distance<50:
         return True
     else:
@@ -94,8 +96,8 @@ speed=120
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
-    # x=screen.fill((0,99,0))
-    screen.blit(bg,(0,bgY2))
+    #x=screen.fill((0,99,0))
+    #screen.blit(bg,(0,bgY2))
     # xaxis-=0.1
     # yaxis-=0.1
     redrawWindow()
@@ -104,8 +106,9 @@ while a:
     bgY2 +=5
     
     if bgY>=bg.get_height():
-        bgY=0
-    if bgY2>=bg.get_height()*1:
+        print(bg.get_height())
+        bgY=bg.get_height()*-1
+    if bgY2>=bg.get_height():
         bgY2=bg.get_height()*-1
         
     for event in pygame.event.get():
@@ -134,7 +137,7 @@ while a:
             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                 yc=0
                 
-    clock.tick(speed)
+    clock.tick(fps)
                 
     xaxis+=xc
     yaxis+=yc
