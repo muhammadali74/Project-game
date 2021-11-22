@@ -57,14 +57,22 @@ obs3=pygame.transform.scale(obs3,(54,54))
 obs4=pygame.transform.scale(obs4,(54,54))
 obs5=pygame.transform.scale(obs5,(54,54))
 obs6=pygame.transform.scale(obs6,(54,54))
+person1=pygame.image.load('person.png')
+person1=pygame.transform.scale(person1,[54,54])
 
 xobs = random.randint(180,790)
+sleepp=random.randint(1,5)
 yobs = -100
 xcobs=5
 ycobs=5
+state1='go'
 
 def obstacle(img,xcor,ycor):
+    global state_1
+    state_1='stop'
     screen.blit(img,(xcor,ycor))
+    
+
 
 def redrawWindow():
     screen.blit(bg,(0,bgY))
@@ -73,7 +81,6 @@ def redrawWindow():
 
 def collission(x1,y1,x2,y2):
     distance=math.sqrt((x1-x2)**2 + (y1-y2)**2)
-    # print(distance)
     if distance<50:
         return True
     else:
@@ -96,14 +103,19 @@ speed=120
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
-    #x=screen.fill((0,99,0))
-    #screen.blit(bg,(0,bgY2))
-    # xaxis-=0.1
-    # yaxis-=0.1
+    # x=screen.fill((0,99,0))
+    # screen.blit(bg,(0,bgY2))
     redrawWindow()
     #clock.tick(speed)
     bgY += 5
     bgY2 +=5
+
+    if bullet_state is 'fire':
+        goli(bullet,xbullet,ybullet)
+        ybullet+=ycbullet
+    if ybullet<=0:
+        bullet_state='hold'
+        ybullet=yaxis
     
     if bgY>=bg.get_height():
         print(bg.get_height())
@@ -114,8 +126,8 @@ while a:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             a=False
-        if event.type==USEREVENT+1:
-            speed +=5
+        # if event.type==USEREVENT+1:
+            # speed +=5
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_ESCAPE:
                 a=False
@@ -150,25 +162,21 @@ while a:
     if yaxis>=600:
         yaxis=600
     
-    obstacle(obs6,xobs,yobs)
+    obstacle(person1,xobs,yobs)
+    
     yobs+=ycobs
     # if yobs>=625:
     #     yobs=625
 
     did_collide=collission(xaxis,yaxis,xobs,yobs)
     if did_collide==True:
-        print(1)
-        xaxis=0
-        yaxis=0
+        print('GAMEOVER')
+        a=False
 
-    if ybullet<=0:
-        bullet_state='hold'
-        ybullet=yaxis
-    if bullet_state is 'fire':
-        goli(bullet,xbullet,ybullet)
-        ybullet+=ycbullet
+    
+    
 
-    car(car1,xaxis,yaxis)
+    car(car2,xaxis,yaxis)
         
 
 
