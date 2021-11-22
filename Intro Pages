@@ -1,0 +1,114 @@
+import pygame
+import button
+from pygame.locals import *
+import time
+import os
+import sys
+import math
+import random
+from pygame.constants import *
+from pygame.locals import *
+
+screen = pygame.display.set_mode((1080, 720))
+caption = pygame.display.set_caption('Delta SpeedRun')
+bg = pygame.image.load('Road pic 1 filter.jpg')
+bg = pygame.transform.scale(bg2, (1080, 720))
+
+start_img = pygame.image.load('Start game button.png')
+options_img = pygame.image.load('Options button.png')
+exit_img = pygame.image.load('Quit game button.png')
+cars_img = pygame.image.load('cars button.png')
+bg_img = pygame.image.load('bg button.png')
+car1_img = pygame.image.load('car.png')
+car2_img = pygame.image.load('car2.png')
+car3_img = pygame.image.load('car3.png')
+back_img = pygame.image.load('back arrow.jpg')
+difficulty_img=pygame.image.load('difficulty_img.png')
+
+car1 = pygame.transform.scale(car1, (120, 120))
+car2 = pygame.transform.scale(car2, (120, 120))
+car3 = pygame.transform.scale(car3, (120, 120))
+back_img = pygame.transform.scale(back_img, (120, 120))
+
+
+class Button():
+  def __init__(self, x, y, image):
+      self.rect = self.image.get_rect()
+        # self.rect.topleft = (x, y)    why is this needed?
+        # self.clicked = False
+
+  def draw(self,  # surface):
+      action=False
+      pos = pygame.mouse.get_pos()
+      
+      #if self==cars_button or self==b
+
+      if self.rect.collidepoint(pos):
+          if pygame.mouse.get_pressed()[0] == 1:  # and self.clicked == False:   #[0] for left mouse clicks
+            #self.clicked = True
+            action = True
+  
+      # if pygame.mouse.get_pressed()[0] == 0:
+      # self.clicked = False
+  
+      surface.blit(self.image, (self.rect.x, self.rect.y))
+      # screen
+  
+      return action
+
+  def drawCars(self):
+    action = False
+    pos = pygame.mouse.get_pos()
+
+    if self.rect.collidepoint(pos):
+      if pygame.mouse.get_pressed()[0] == 1:  # and self.clicked == False:   #[0] for left mouse clicks
+        # self.clicked = True
+        action = True
+
+    # if pygame.mouse.get_pressed()[0] == 0:
+    # self.clicked = False
+
+    surface.blit(self.image, (self.rect.x, self.rect.y))
+    # screen
+
+    return action
+
+    
+
+
+start_button = Button(540, 200, start_img)
+options_button = Button(540, 350, options_img)
+exit_button = Button(540, 500, exit_img)
+cars_button = Button(540, 200, cars_img)
+bg_button = Button(540, 350, bg_img)
+difficulty_button = Button(540, 500, difficulty_img)
+back_button = Button(50, 700, back_img)
+
+run = True
+while run:
+    # pos = pygame.mouse.get_pos()
+    # pressed1 = pygame.mouse.get_pressed()[0]
+    # screen.fill((202,228,241))
+    if start_button.draw():
+
+    elif options_button.draw():
+      if back_button.draw():
+          continue
+      a=True
+      while a:
+        if cars_button.draw():
+           
+        elif bg_button.draw():
+        
+        elif difficulty_button.draw():
+        
+        
+    elif exit_button.draw():
+       run= False
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+        if
+
+pygame.quit()
