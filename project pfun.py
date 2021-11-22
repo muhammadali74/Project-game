@@ -21,7 +21,7 @@ clock=pygame.time.Clock()
 bg=pygame.image.load('background1.png')
 bg=pygame.transform.scale(bg,(1080,720))
 bgY=0
-bgY2=bg.get_width()
+bgY2=bg.get_height()
 
 car1=pygame.image.load('car.png')       #<div>Icons made by <a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 car2=pygame.image.load('car2.png')      #<div>Icons made by <a href="https://www.flaticon.com/authors/berkahicon" title="berkahicon">berkahicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
@@ -94,7 +94,7 @@ speed=120
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
-    #x=screen.fill((0,99,0))
+    # x=screen.fill((0,99,0))
     screen.blit(bg,(0,bgY2))
     # xaxis-=0.1
     # yaxis-=0.1
@@ -105,8 +105,8 @@ while a:
     
     if bgY>=bg.get_height():
         bgY=0
-    if bgY2>=bg.get_height()*0.5:
-        bgY2=bg.get_height()*-0.5
+    if bgY2>=bg.get_height()*1:
+        bgY2=bg.get_height()*-1
         
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
