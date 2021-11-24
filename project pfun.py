@@ -42,6 +42,8 @@ xc=0
 yc=0
 
 def car(pic,xcor,ycor):
+    global carrect
+    carrect=pic.get_rect(x=xcor,y=ycor)
     screen.blit(pic,(xcor,ycor))
 
     
@@ -98,6 +100,8 @@ for i in range(obstacle_num):
 
 
 def obstacle(img,xcor,ycor):
+    global obsrect
+    obsrect=img.get_rect(x=xcor,y=ycor)
     screen.blit(img,(xcor,ycor))
 
     
@@ -195,6 +199,7 @@ while a:
     if yaxis>=600:
         yaxis=600
     
+    car(car2,xaxis,yaxis)
     for i in range(obstacle_num):
         obstacle(obs[i],xobs[i],yobs[i])
         yobs[i]+=ycobs
@@ -206,14 +211,12 @@ while a:
             print(score)
             yobs[i]=positiony[i]
             xobs[i]=positionx[i]
-        did_collide=collission(xaxis,yaxis,xobs[i],yobs[i])
-        if did_collide==True:
-            print('GAMEOVER')
-            a=False
-        # carrec=car1.get_rect(topleft=(0,0))
-        # obsrec=obs1.get_rect(topleft=(20,30))
-        # if pygame.Rect.colliderect(carrec,obsrec):
+        # did_collide=collission(xaxis,yaxis,xobs[i],yobs[i])
+        # if did_collide==True:
+        #     print('GAMEOVER')
         #     a=False
+        if pygame.Rect.colliderect(carrect,obsrect):
+             a=False
     
     # if yobs>=625:
     #     yobs=625
