@@ -216,7 +216,7 @@ while a:
         #     print('GAMEOVER')
         #     a=False
         if pygame.Rect.colliderect(carrect,obsrect):
-             a=False
+             pass
     
     # if yobs>=625:
     #     yobs=625
