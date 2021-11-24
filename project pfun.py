@@ -99,6 +99,7 @@ for i in range(obstacle_num):
 
 def obstacle(img,xcor,ycor):
     screen.blit(img,(xcor,ycor))
+
     
 
 
@@ -113,6 +114,9 @@ def collission(x1,y1,x2,y2):
         return True
     else:
         return False
+
+def rectcollision():
+    pass
     
 bullet=pygame.image.load('bullet.png')
 bullet=pygame.transform.scale(bullet,(28,28))
@@ -206,6 +210,10 @@ while a:
         if did_collide==True:
             print('GAMEOVER')
             a=False
+        # carrec=car1.get_rect(topleft=(0,0))
+        # obsrec=obs1.get_rect(topleft=(20,30))
+        # if pygame.Rect.colliderect(carrec,obsrec):
+        #     a=False
     
     # if yobs>=625:
     #     yobs=625
