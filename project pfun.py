@@ -43,7 +43,8 @@ yc=0
 
 def car(pic,xcor,ycor):
     global carrect
-    carrect=pic.get_rect(x=xcor,y=ycor)
+    temp=pygame.transform.scale(pic,(20,100))
+    carrect=temp.get_rect(x=xcor,y=ycor)
     screen.blit(pic,(xcor,ycor))
 
     
@@ -114,7 +115,7 @@ def redrawWindow(background):
 
 def collission(x1,y1,x2,y2):
     distance=math.sqrt((x1-x2)**2 + (y1-y2)**2)
-    if distance<20:
+    if x1-x2<5 and y1-y2<5:
         return True
     else:
         return False
@@ -141,8 +142,6 @@ speed=120
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
-    # x=screen.fill((0,99,0))
-    # screen.blit(bg,(0,bgY2))
     redrawWindow(bg)
     #clock.tick(speed)
     bgY += 5
@@ -211,12 +210,12 @@ while a:
             print(score)
             yobs[i]=positiony[i]
             xobs[i]=positionx[i]
-        # did_collide=collission(xaxis,yaxis,xobs[i],yobs[i])
+        did_collide=collission(xaxis,yaxis,xobs[i],yobs[i])
         # if did_collide==True:
         #     print('GAMEOVER')
         #     a=False
         if pygame.Rect.colliderect(carrect,obsrect):
-             pass
+            print('OVER')
     
     # if yobs>=625:
     #     yobs=625
