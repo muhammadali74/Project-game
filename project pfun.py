@@ -36,15 +36,16 @@ car3=pygame.image.load('car3.png')      #<div>Icons made by <a href="https://www
 car1=pygame.transform.scale(car1,(120,120))
 car2=pygame.transform.scale(car2,(120,120))
 car3=pygame.transform.scale(car3,(120,120))
+temp=pygame.transform.scale(car2,(20,100))
 xaxis = 500
 yaxis = 570
 xc=0
 yc=0
 
-def car(pic,xcor,ycor):
+def car(pic,pictemp,xcor,ycor):
     global carrect
-    temp=pygame.transform.scale(pic,(20,100))
-    carrect=temp.get_rect(x=xcor,y=ycor)
+    temp=pygame.transform.scale(pictemp,(40,70))
+    carrect=temp.get_rect(x=xcor+50,y=ycor)
     screen.blit(pic,(xcor,ycor))
 
     
@@ -112,17 +113,20 @@ def redrawWindow(background):
     screen.blit(background,(0,bgY))
     screen.blit(background,(0,bgY2))
     #pygame.display.update()
-
-def collission(x1,y1,x2,y2):
-    distance=math.sqrt((x1-x2)**2 + (y1-y2)**2)
-    if x1-x2<5 and y1-y2<5:
-        return True
-    else:
-        return False
-
-def rectcollision():
-    pass
     
+coin=pygame.image.load('dollar.png')#<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>#
+coin=pygame.transform.scale(coin,(30,30))
+xcoin=random.randint(180,790)
+ycoin=random.randint(-1200,-200)
+
+
+
+def coinreward(pic,xcor,ycor):
+    global coinrect
+    coinrect=pic.get_rect(x=xcor,y=ycor)
+    screen.blit(pic,(xcor,ycor))
+
+
 bullet=pygame.image.load('bullet.png')
 bullet=pygame.transform.scale(bullet,(28,28))
 xbullet=0
@@ -137,8 +141,18 @@ def goli(image,xcor,ycor):
     screen.blit(image,(xcor+40,ycor+10))
 
 score=0
-
+lives=50
 speed=120
+
+fnt=pygame.font.Font('Orbitron-VariableFont_wght.ttf',28)
+xfnt=0
+yfnt=0
+
+def stat(xcor,ycor,score,lives):
+    status=fnt.render('Score: '+ str(score),True,(255,255,255))
+    life=fnt.render('Health: '+ ('|'*lives),True,(255,255,255))
+    screen.blit(status,(xcor,ycor))
+    screen.blit(life,(xfnt,yfnt+30))
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
@@ -146,6 +160,7 @@ while a:
     #clock.tick(speed)
     bgY += 5
     bgY2 +=5
+    clock.tick(fps)
 
     if bullet_state is 'fire':
         goli(bullet,xbullet,ybullet)
@@ -184,8 +199,7 @@ while a:
                 xc=0
             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                 yc=0
-                
-    clock.tick(fps)
+    # coin_num=random.randint(1,4) torturemode
                 
     xaxis+=xc
     yaxis+=yc
@@ -198,7 +212,7 @@ while a:
     if yaxis>=600:
         yaxis=600
     
-    car(car2,xaxis,yaxis)
+    car(car2,temp,xaxis,yaxis)
     for i in range(obstacle_num):
         obstacle(obs[i],xobs[i],yobs[i])
         yobs[i]+=ycobs
@@ -207,22 +221,29 @@ while a:
             xobs[i]=positionx[i]
         if yobs[i]>720:
             score+=1
-            print(score)
             yobs[i]=positiony[i]
             xobs[i]=positionx[i]
-        did_collide=collission(xaxis,yaxis,xobs[i],yobs[i])
-        # if did_collide==True:
-        #     print('GAMEOVER')
-        #     a=False
         if pygame.Rect.colliderect(carrect,obsrect):
-            print('OVER')
-    
-    # if yobs>=625:
-    #     yobs=625
+            lives-=1
 
-    car(car2,xaxis,yaxis)
+    coinreward(coin,xcoin,ycoin)
+    ycoin+=ycobs
+    if ycoin>720:
+        ycoin=random.randint(-100,-20)
+        xcoin=random.randint(180,790)
+    elif pygame.Rect.colliderect(coinrect,carrect):
+        score+=5
+        ycoin=random.randint(-100,-20)
+        xcoin=random.randint(180,790)
+        print('add 5')
+    
+    if lives==0:
+        a=False
+
+    print('|'*lives)
+    stat(xfnt,yfnt,score,lives)
+    
 
     pygame.display.update()
     
-
 pygame.quit()
