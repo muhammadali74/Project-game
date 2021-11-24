@@ -76,8 +76,7 @@ obs7=pygame.transform.scale(obs7,(54,54))
 obs8=pygame.transform.scale(obs8,(54,54))
 obs9=pygame.transform.scale(obs9,(54,54))
 obs10=pygame.transform.scale(obs10,(54,54))
-person1=pygame.image.load('person.png')
-person1=pygame.transform.scale(person1,[54,54])
+
 all_obstacles=[obs1,obs2,obs3,obs4,obs5,obs6,obs7,obs8,obs9,obs10]
 random_obstacles=random.choice(all_obstacles)
 obstacle_num=random.randint(5,15)
@@ -97,13 +96,24 @@ for i in range(obstacle_num):
     positionx.append(random.randint(180,790))
     positiony.append(random.randint(-1200,-200))
 
-
-
-
-
 def obstacle(img,xcor,ycor):
     global obsrect
     obsrect=img.get_rect(x=xcor,y=ycor)
+    screen.blit(img,(xcor,ycor))
+
+person1=pygame.image.load('person.png')
+person1=pygame.transform.scale(person1,[70,70])
+pson=pygame.transform.scale(person1,[70,70])
+person2=pygame.image.load('person2.png')
+person2=pygame.transform.scale(person2,[70,70])
+people=[person1,person2]
+persona=random.choice(people)
+xperson=180#random.choice([180,790])
+yperson=random.randint(-2000,-200)
+
+def personobs(img,xcor,ycor):
+    global personrect
+    personrect=img.get_rect(x=xcor,y=ycor)
     screen.blit(img,(xcor,ycor))
 
     
@@ -143,6 +153,8 @@ def goli(image,xcor,ycor):
 score=0
 lives=50
 speed=120
+bgspeed=5
+carelative=5
 
 fnt=pygame.font.Font('Orbitron-VariableFont_wght.ttf',28)
 xfnt=0
@@ -156,10 +168,10 @@ def stat(xcor,ycor,score,lives):
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
-    redrawWindow(bg)
+    redrawWindow(bg2)
     #clock.tick(speed)
-    bgY += 5
-    bgY2 +=5
+    bgY += bgspeed
+    bgY2 +=bgspeed
     clock.tick(fps)
 
     if bullet_state is 'fire':
@@ -183,13 +195,13 @@ while a:
             if event.key==pygame.K_ESCAPE:
                 a=False
             if event.key==pygame.K_LEFT:
-                xc=-5
+                xc=carelative*-1
             if event.key==pygame.K_RIGHT:
-                xc=5
+                xc=carelative
             if event.key==pygame.K_UP:
-                yc=-5
+                yc=carelative*-1
             if event.key==pygame.K_DOWN:
-                yc=5
+                yc=carelative
             if event.key==pygame.K_SPACE and bullet_state=='hold':
                 xbullet=xaxis
                 goli(bullet, xbullet,ybullet)
@@ -236,6 +248,24 @@ while a:
         ycoin=random.randint(-100,-20)
         xcoin=random.randint(180,790)
         print('add 5')
+
+    personobs(persona,xperson,yperson)
+    yperson+=ycobs
+    if xperson<900 and yperson>0:
+        xperson+=6
+    if pygame.Rect.colliderect(personrect,carrect):
+        print('Game Over')
+        a=False
+    elif yperson>3500:
+        yperson=random.randint(-2000,-200)
+        xperson=180
+
+    
+    if score%10==0 and score!=0:
+        ycobs+=0.01
+        bgspeed+=0.01
+        carelative+=0.01
+
     
     if lives==0:
         a=False
