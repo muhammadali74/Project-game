@@ -218,23 +218,9 @@ while a:
     # if yobs>=625:
     #     yobs=625
 
-    
-    
-    
-    
-
     car(car2,xaxis,yaxis)
-        
-
-
 
     pygame.display.update()
-    # for i in range(255):
-    #     x=screen.fill((0,i,0))
-    #     time.sleep(1)
-    #     screen.blit(x,(0,0))
-    #     pygame.display.update()
-
     
 
 pygame.quit()
