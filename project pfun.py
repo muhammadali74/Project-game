@@ -43,6 +43,7 @@ yc=0
 
 def car(pic,xcor,ycor):
     screen.blit(pic,(xcor,ycor))
+
     
 obs1=pygame.image.load('tree1.png')
 obs2=pygame.image.load('tree2.png')
@@ -50,6 +51,16 @@ obs3=pygame.image.load('tree3.png')
 obs4=pygame.image.load('tree4.png')
 obs5=pygame.image.load('tree5.png')
 obs6=pygame.image.load('cones.png')
+obs7=pygame.image.load('traffic-barriers.png')
+obs8=pygame.image.load('barrier.png')
+obs9=pygame.image.load('ditch.png')
+obs10=pygame.image.load('obstacle-hole.png')
+# all_obstacles=[]
+# for i in range(1,11):
+#     obsv=pygame.transform.scale((obs+str(i)),(54,54))
+    # all_obstacles.append(obsv)
+
+
 
 obs1=pygame.transform.scale(obs1,(54,54))
 obs2=pygame.transform.scale(obs2,(54,54))
@@ -57,19 +68,36 @@ obs3=pygame.transform.scale(obs3,(54,54))
 obs4=pygame.transform.scale(obs4,(54,54))
 obs5=pygame.transform.scale(obs5,(54,54))
 obs6=pygame.transform.scale(obs6,(54,54))
+obs7=pygame.transform.scale(obs7,(54,54))
+obs8=pygame.transform.scale(obs8,(54,54))
+obs9=pygame.transform.scale(obs9,(54,54))
+obs10=pygame.transform.scale(obs10,(54,54))
 person1=pygame.image.load('person.png')
 person1=pygame.transform.scale(person1,[54,54])
-
-xobs = random.randint(180,790)
-sleepp=random.randint(1,5)
-yobs = -100
-xcobs=5
+all_obstacles=[obs1,obs2,obs3,obs4,obs5,obs6,obs7,obs8,obs9,obs10]
+random_obstacles=random.choice(all_obstacles)
+obstacle_num=random.randint(5,15)
+obs=[]
+xobs=[]
+yobs=[]
+positionx=[]
+positiony=[]
+# xobs = random.randint(180,790)
+# yobs = -100
 ycobs=5
-state1='go'
+for i in range(obstacle_num):
+    random_obstacles=random.choice(all_obstacles)
+    obs.append(random_obstacles)
+    xobs.append(random.randint(180,790))
+    yobs.append(random.randint(-1200,-200))
+    positionx.append(random.randint(180,790))
+    positiony.append(random.randint(-1200,-200))
+
+
+
+
 
 def obstacle(img,xcor,ycor):
-    global state_1
-    state_1='stop'
     screen.blit(img,(xcor,ycor))
     
 
@@ -81,7 +109,7 @@ def redrawWindow(background):
 
 def collission(x1,y1,x2,y2):
     distance=math.sqrt((x1-x2)**2 + (y1-y2)**2)
-    if distance<50:
+    if distance<20:
         return True
     else:
         return False
@@ -98,6 +126,8 @@ def goli(image,xcor,ycor):
     global bullet_state
     bullet_state='fire'
     screen.blit(image,(xcor+40,ycor+10))
+
+score=0
 
 speed=120
 pygame.time.set_timer(USEREVENT+1,500)
@@ -118,7 +148,6 @@ while a:
         ybullet=yaxis
     
     if bgY>=bg.get_height():
-        print(bg.get_height())
         bgY=bg.get_height()*-1
     if bgY2>=bg.get_height():
         bgY2=bg.get_height()*-1
@@ -162,17 +191,27 @@ while a:
     if yaxis>=600:
         yaxis=600
     
-    obstacle(person1,xobs,yobs)
+    for i in range(obstacle_num):
+        obstacle(obs[i],xobs[i],yobs[i])
+        yobs[i]+=ycobs
+        if yobs[i]>1080:
+            yobs[i]=positiony[i]
+            xobs[i]=positionx[i]
+        if yobs[i]>720:
+            score+=1
+            print(score)
+            yobs[i]=positiony[i]
+            xobs[i]=positionx[i]
+        did_collide=collission(xaxis,yaxis,xobs[i],yobs[i])
+        if did_collide==True:
+            print('GAMEOVER')
+            a=False
     
-    yobs+=ycobs
     # if yobs>=625:
     #     yobs=625
 
-    did_collide=collission(xaxis,yaxis,xobs,yobs)
-    if did_collide==True:
-        print('GAMEOVER')
-        a=False
-
+    
+    
     
     
 
