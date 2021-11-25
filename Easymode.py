@@ -7,6 +7,7 @@ import math
 import random
 from pygame.constants import *
 from pygame.locals import *
+from pygame import mixer
 
 pygame.init()
 pygame.display.init
