@@ -284,7 +284,7 @@ while a:
      
     if score%10==0 and score!=0:
         ycobs+=random.uniform(-0.1,1)
-        bgspeed+=random.uniform(-1,1)
+        bgspeed+=random.uniform(-1,1) 
         carelative+=random.uniform(-1,1)
 
     
