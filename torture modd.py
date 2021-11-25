@@ -59,7 +59,7 @@ obs5=pygame.image.load('tree5.png')
 obs6=pygame.image.load('cones.png')
 obs7=pygame.image.load('traffic-barriers.png')
 obs8=pygame.image.load('barrier.png')
-obs9=pygame.image.load('ditch.png')
+obs9=pygame.image.load('ditch.png')   
 obs10=pygame.image.load('obstacle-hole.png')
 # all_obstacles=[]
 # for i in range(1,11):
@@ -156,7 +156,7 @@ def goli(image,xcor,ycor):
     screen.blit(image,(xcor+40,ycor+10))
 
 score=0
-lives=50
+lives=200  
 speed=120
 bgspeed=5
 bgXspeed=5
@@ -282,10 +282,10 @@ while a:
         xperson=180
 
      
-    if score%10==0 and score!=0:
-        ycobs+=random.uniform(-0.1,1)
-        bgspeed+=random.uniform(-1,1) 
-        carelative+=random.uniform(-1,1)
+    if score%40==0 and score!=0:
+        ycobs+=random.uniform(0.1,0.5)
+        bgspeed+=random.uniform(0.1,0.5) 
+        carelative+=random.uniform(0.1 ,0.5)
 
     
     if lives==0:

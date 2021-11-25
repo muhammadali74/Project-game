@@ -281,7 +281,7 @@ while a:
     print('|'*lives)
     stat(xfnt,yfnt,score,lives)
     
-
+ 
     pygame.display.update()
     
 pygame.quit()
