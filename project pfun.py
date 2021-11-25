@@ -268,7 +268,7 @@ while a:
         yperson=random.randint(-2000,-200)
         xperson=180
 
-    
+     
     if score%10==0 and score!=0:
         ycobs+=0.01
         bgspeed+=0.01
