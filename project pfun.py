@@ -7,6 +7,7 @@ import math
 import random
 from pygame.constants import *
 from pygame.locals import *
+from pygame import mixer
 
 pygame.init()
 pygame.display.init
@@ -17,6 +18,11 @@ pygame.display.set_icon(icon)
 
 fps=60
 clock=pygame.time.Clock()
+
+mixer.init()
+mixer.music.load("background.wav")
+#mixer.music.set_volume(1)
+mixer.music.play(-1)
 
 bg=pygame.image.load('background1.png')
 bg2=pygame.image.load('Road pic 1 filter.jpg')
@@ -116,7 +122,9 @@ def personobs(img,xcor,ycor):
     personrect=img.get_rect(x=xcor,y=ycor)
     screen.blit(img,(xcor,ycor))
 
-    
+def game_over_text():
+    over_text = over_font.render("GAME OVER", True, (245, 255, 250))
+    screen.blit(over_text, (200, 250))   
 
 
 def redrawWindow(background):
@@ -276,6 +284,7 @@ while a:
 
     
     if lives==0:
+        game_over_text()
         a=False
 
     print('|'*lives)
