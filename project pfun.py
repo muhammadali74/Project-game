@@ -79,7 +79,7 @@ obs10=pygame.transform.scale(obs10,(54,54))
 
 all_obstacles=[obs1,obs2,obs3,obs4,obs5,obs6,obs7,obs8,obs9,obs10]
 random_obstacles=random.choice(all_obstacles)
-obstacle_num=random.randint(5,15)
+obstacle_num=random.randint(30,35)
 obs=[]
 xobs=[]
 yobs=[]
@@ -144,8 +144,11 @@ ybullet=yaxis
 xcbullet=0
 ycbullet=-10
 bullet_state='hold'
+bulrect=bullet.get_rect(x=xbullet,y=ybullet)
 
 def goli(image,xcor,ycor):
+    global bulrect
+    bulrect=image.get_rect(x=xcor+40,y=ycor+10)
     global bullet_state
     bullet_state='fire'
     screen.blit(image,(xcor+40,ycor+10))
@@ -237,6 +240,11 @@ while a:
             xobs[i]=positionx[i]
         if pygame.Rect.colliderect(carrect,obsrect):
             lives-=1
+        if pygame.Rect.colliderect(bulrect,obsrect) and bullet_state=='fire':
+            yobs[i]=positiony[i]
+            xobs[i]=positionx[i]
+            bullet_state='hold'
+            ybullet=yaxis
 
     coinreward(coin,xcoin,ycoin)
     ycoin+=ycobs
