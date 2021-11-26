@@ -16,13 +16,14 @@ icon=pygame.image.load('racing.png')
 pygame.display.set_icon(icon)
 
 mixer.init()
-#mixer.music.load("background.wav")
-#mixer.music.set_volume(1)
-#mixer.music.play(-1)  #-------> to play on loop
+mixer.music.load("intromusic.mp3")
+mixer.music.play(1)
+mixer.music.set_volume(0.1)
 
 fps=60
 clock=pygame.time.Clock()
-
+gameoverwallpaper=pygame.image.load('gameoverwallpaper.jpg')
+gameoverwallpaper=pygame.transform.scale(gameoverwallpaper,(1080,720))
 bg=pygame.image.load('bgcompressed.jpeg')
 bg2=pygame.image.load('Road pic 1 filter.jpg')
 bg=pygame.transform.scale(bg,(1080,720))
@@ -52,10 +53,33 @@ def car(pic,pictemp,xcor,ycor):
     temp=pygame.transform.scale(pictemp,(40,70))
     carrect=temp.get_rect(x=xcor+50,y=ycor)
     screen.blit(pic,(xcor,ycor))
+
+def retrybutton(img,xcor,ycor):
+    global buttonrect
+    buttonrect=img.get_rect(x=xcor,y=ycor)
+    screen.blit(img,(xcor,ycor))
+
+
+def exitbutton(img,xcor,ycor):
+    global exitrect
+    exitrect=img.get_rect(x=xcor,y=ycor)
+    screen.blit(img,(xcor,ycor))
     
 def game_over_text():
-    over_text = over_font.render("GAME OVER", True, (245, 255, 250))
-    screen.blit(over_text, (200, 250))
+    over_text =font2.render("GAME OVER", True, (245, 255, 250))
+    score_text=font.render("score:   "+str(score), True, (245, 255, 250))
+    screen.blit(over_text, (200,300))
+    screen.blit(score_text, (200, 450))
+
+buttonretry=pygame.image.load('buttons.png')
+buttonretry2=pygame.image.load('buttons2.png')
+buttonexit=pygame.image.load('buttonexit.png')
+buttonexit2=pygame.image.load('buttonexit2.png')
+
+buttonretry=pygame.transform.scale(buttonretry,(190,69))
+buttonretry2=pygame.transform.scale(buttonretry2,(190,69))
+buttonexit=pygame.transform.scale(buttonexit,(190,69))
+buttonexit2=pygame.transform.scale(buttonexit2,(190,69))
 
 obs1=pygame.image.load('tree1.png')
 obs2=pygame.image.load('tree2.png')
@@ -147,6 +171,8 @@ bgspeed=3
 carelative=3
 
 fnt=pygame.font.Font('Orbitron-VariableFont_wght.ttf',28)
+font=pygame.font.Font('Orbitron-VariableFont_wght.ttf',35)
+font2=pygame.font.Font('Orbitron-VariableFont_wght.ttf',50)
 xfnt=0
 yfnt=0
 
@@ -157,125 +183,181 @@ def stat(xcor,ycor,score,lives):
     screen.blit(life,(xfnt,yfnt+30))
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
-while a:
-    redrawWindow(bg)
-    #clock.tick(speed)
-    bgY += bgspeed
-    bgY2 +=bgspeed
-    clock.tick(fps)
+mainloop=True
+b=True
+while mainloop:
+    while a:
+        click=False
+        redrawWindow(bg)
+        #clock.tick(speed)
+        bgY += bgspeed
+        bgY2 +=bgspeed
+        clock.tick(fps)
 
-    if bullet_state is 'fire':
-        goli(bullet,xbullet,ybullet)
-        ybullet+=ycbullet
-    if ybullet<=0:
-        bullet_state='hold'
-        ybullet=yaxis
-    
-    if bgY>=bg.get_height():
-        bgY=bg.get_height()*-1
-    if bgY2>=bg.get_height():
-        bgY2=bg.get_height()*-1
-        
-    for event in pygame.event.get():
-        if event.type==pygame.QUIT:
-            a=False
-        if event.type==USEREVENT+1:
-            speed +=5
-        if event.type==pygame.KEYDOWN:
-            if event.key==pygame.K_ESCAPE:
-                a=False
-            if event.key==pygame.K_LEFT:
-                xc=carelative*-1
-                tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
-                tyrescreechSound.set_volume(0.4)
-                tyrescreechSound.play()
-            if event.key==pygame.K_RIGHT:
-                xc=carelative
-                tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
-                tyrescreechSound.set_volume(0.4)
-                tyrescreechSound.play()
-            if event.key==pygame.K_UP:
-                yc=carelative*-1
-            if event.key==pygame.K_DOWN:
-                yc=carelative
-            if event.key==pygame.K_SPACE and bullet_state=='hold':
-                xbullet=xaxis
-                goli(bullet, xbullet,ybullet)
-                laserSound=pygame.mixer.Sound("laser.wav")
-                laserSound.play()
-        
-        if event.type==pygame.KEYUP:
-            if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
-                xc=0
-            if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
-                yc=0
-    # coin_num=random.randint(1,4) torturemode
-                
-    xaxis+=xc
-    yaxis+=yc
-    if xaxis<=180:
-        xaxis=180
-    if xaxis>=790:
-        xaxis=790
-    if yaxis<=40:
-        yaxis=40
-    if yaxis>=600:
-        yaxis=600
-    
-    car(car2,temp,xaxis,yaxis)
-    for i in range(obstacle_num):
-        obstacle(obs[i],xobs[i],yobs[i])
-        yobs[i]+=ycobs
-        if yobs[i]>1080:
-            yobs[i]=positiony[i]
-            xobs[i]=positionx[i]
-        if yobs[i]>720:
-            score+=1
-            yobs[i]=positiony[i]
-            xobs[i]=positionx[i]
-        if pygame.Rect.colliderect(carrect,obsrect):
-            lives-=1
-            carcrashSound=pygame.mixer.Sound('carcrash.mp3')
-            carcrashSound.play()
-        if pygame.Rect.colliderect(bulrect,obsrect) and bullet_state=='fire':
-            explosionSound=pygame.mixer.Sound('explosion.wav')
-            woodcrashSound=pygame.mixer.Sound('woodcrash.mp3')
-            randomsound=random.choice([explosionSound,woodcrashSound])
-            randomsound.play()
-            yobs[i]=positiony[i]
-            xobs[i]=positionx[i]
+        if bullet_state is 'fire':
+            goli(bullet,xbullet,ybullet)
+            ybullet+=ycbullet
+        if ybullet<=0:
             bullet_state='hold'
             ybullet=yaxis
-            bulrect=bullet.get_rect(x=xbullet,y=ybullet) #might not be needed
+        
+        if bgY>=bg.get_height():
+            bgY=bg.get_height()*-1
+        if bgY2>=bg.get_height():
+            bgY2=bg.get_height()*-1
+            
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                mainloop=False
+                a=False
+            if event.type==USEREVENT+1:
+                speed +=5
+            if event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_ESCAPE:
+                    # mainloop=False
+                    b=True
+                    a=False
+                if event.key==pygame.K_LEFT:
+                    xc=carelative*-1
+                    tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
+                    tyrescreechSound.set_volume(0.4)
+                    tyrescreechSound.play()
+                if event.key==pygame.K_RIGHT:
+                    xc=carelative
+                    tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
+                    tyrescreechSound.set_volume(0.4)
+                    tyrescreechSound.play()
+                if event.key==pygame.K_UP:
+                    yc=carelative*-1
+                if event.key==pygame.K_DOWN:
+                    yc=carelative
+                if event.key==pygame.K_SPACE and bullet_state=='hold':
+                    xbullet=xaxis
+                    goli(bullet, xbullet,ybullet)
+                    laserSound=pygame.mixer.Sound("laser.wav")
+                    laserSound.play()
+            
+            if event.type==pygame.KEYUP:
+                if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
+                    xc=0
+                if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
+                    yc=0
+        # coin_num=random.randint(1,4) torturemode
+                    
+        xaxis+=xc
+        yaxis+=yc
+        if xaxis<=180:
+            xaxis=180
+        if xaxis>=790:
+            xaxis=790
+        if yaxis<=40:
+            yaxis=40
+        if yaxis>=600:
+            yaxis=600
+        
+        car(car2,temp,xaxis,yaxis)
+        for i in range(obstacle_num):
+            obstacle(obs[i],xobs[i],yobs[i])
+            yobs[i]+=ycobs
+            if yobs[i]>1080:
+                yobs[i]=positiony[i]
+                xobs[i]=positionx[i]
+            if yobs[i]>720:
+                score+=1
+                yobs[i]=positiony[i]
+                xobs[i]=positionx[i]
+            if pygame.Rect.colliderect(carrect,obsrect):
+                lives-=1
+                carcrashSound=pygame.mixer.Sound('carcrash.mp3')
+                carcrashSound.play()
+            if pygame.Rect.colliderect(bulrect,obsrect) and bullet_state=='fire':
+                explosionSound=pygame.mixer.Sound('explosion.wav')
+                woodcrashSound=pygame.mixer.Sound('woodcrash.mp3')
+                randomsound=random.choice([explosionSound,woodcrashSound])
+                randomsound.play()
+                yobs[i]=positiony[i]
+                xobs[i]=positionx[i]
+                bullet_state='hold'
+                ybullet=yaxis
+                bulrect=bullet.get_rect(x=xbullet,y=ybullet) #might not be needed
 
-    coinreward(coin,xcoin,ycoin)
-    ycoin+=ycobs
-    if ycoin>720:
-        ycoin=random.randint(-100,-20)
-        xcoin=random.randint(180,790)
-    elif pygame.Rect.colliderect(coinrect,carrect):
-        score+=5
-        ycoin=random.randint(-100,-20)
-        xcoin=random.randint(180,790)
-        print('add 5')
+        coinreward(coin,xcoin,ycoin)
+        ycoin+=ycobs
+        if ycoin>720:
+            ycoin=random.randint(-100,-20)
+            xcoin=random.randint(180,790)
+        elif pygame.Rect.colliderect(coinrect,carrect):
+            score+=5
+            ycoin=random.randint(-100,-20)
+            xcoin=random.randint(180,790)
+            print('add 5')
 
+        
+        if score%20==0 and score!=0:
+            ycobs+=1
+            bgspeed+=1
+            carelative+=1
+
+        
+        if lives<=0:
+            a=False
+            b=True
+
+        #print('|'*lives)
+        stat(xfnt,yfnt,score,lives)
+        positionx=[random.randint(180,790) for x in range(obstacle_num)]
+        positiony=[random.randint(-1200,-200) for x in range(obstacle_num)]
+        
+
+        pygame.display.update()
     
-    if score%20==0 and score!=0:
-        ycobs+=0.01
-        bgspeed+=0.01
-        carelative+=0.01
-
-    
-    if lives==0:
+    while b:
+        mixer.music.set_volume(1)
+        click=False
+        screen.blit(gameoverwallpaper,(0,0))
         game_over_text()
-        a=False
+        retrybutton(buttonretry,870,520)
+        exitbutton(buttonexit,870,620)
+        mousepos=pygame.mouse.get_pos()
 
-    #print('|'*lives)
-    stat(xfnt,yfnt,score,lives)
-    positionx=[random.randint(180,790) for x in range(obstacle_num)]
-    positiony=[random.randint(-1200,-200) for x in range(obstacle_num)]
-    
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                b=False
+                mainloop=False
+            if event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_ESCAPE:
+                    b=False
+                    mainloop=False
+        if buttonrect.collidepoint(mousepos):
+            retrybutton(buttonretry2,870,520)
+            if pygame.mouse.get_pressed()[0]==1 and click==False:
+                score=0
+                lives=200
+                xaxis=500
+                yaxis=570
+                xobs=[]
+                yobs=[]
+                positionx=[]
+                positiony=[]
+                for i in range(obstacle_num):
+                    random_obstacles=random.choice(all_obstacles)
+                    obs.append(random_obstacles)
+                    xobs.append(random.randint(180,790))
+                    yobs.append(random.randint(-1200,-200))
+                    positionx.append(random.randint(180,790))
+                    positiony.append(random.randint(-1200,-200))
+                bgspeed=3
+                ycobs=3
+                a=True
+                b=False
+        if exitrect.collidepoint(mousepos):
+            exitbutton(buttonexit2,870,620)
+            if pygame.mouse.get_pressed()[0]==1 and click==False:
+                b=False
+                mainloop=False
 
-    pygame.display.update()
+        pygame.display.update()
+
+
     
 pygame.quit()

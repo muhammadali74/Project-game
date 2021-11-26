@@ -18,7 +18,7 @@ pygame.display.set_icon(icon)
 fps=60
 clock=pygame.time.Clock()
 
-bg=pygame.image.load('background1.png')
+bg=pygame.image.load('bgcompressed.jpeg')
 bg2=pygame.image.load('Road pic 1 filter.jpg')
 bg=pygame.transform.scale(bg,(1080,720))
 bg2=pygame.transform.scale(bg2,(1080,720))

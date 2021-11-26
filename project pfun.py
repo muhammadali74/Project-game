@@ -281,5 +281,5 @@ while a:
     
  
     pygame.display.update()
-    
+
 pygame.quit()
