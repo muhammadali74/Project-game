@@ -262,12 +262,12 @@ while mainloop:
                 if event.key==pygame.K_LEFT:
                         xc=carelative*-1
                         tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
-                        tyrescreechSound.set_volume(0.4)
+                        tyrescreechSound.set_volume(0.2)
                         tyrescreechSound.play()
                 if event.key==pygame.K_RIGHT:
                     xc=carelative
                     tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
-                    tyrescreechSound.set_volume(0.4)
+                    tyrescreechSound.set_volume(0.2)
                     tyrescreechSound.play()
                 if event.key==pygame.K_UP:
                     yc=carelative*-1
@@ -365,6 +365,7 @@ while mainloop:
             ycobs+=random.uniform(0.1,0.5)
             bgspeed+=xs
             carelative+=xs
+
             mainbackground=bg2
         if score%30==0 and score!=0:
             mainbackground=bg
