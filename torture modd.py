@@ -20,16 +20,27 @@ fps=60
 clock=pygame.time.Clock()
 
 mixer.init()
-mixer.music.load("background.wav")
+mixer.music.load("Anxiety torture mode.mp3")
 #mixer.music.set_volume(1)
 mixer.music.play(-1)  
 
-bg=pygame.image.load('background1.png')
+bg1=pygame.image.load('background1.png')
 bg2=pygame.image.load('Road pic 1 filter.jpg')
-bg=pygame.transform.scale(bg,(1080,720))
+bg3=pygame.image.load('bg 3.jpg')
+bg4=pygame.image.load('bg 4.jpg')
+bg5=pygame.image.load('bg 5.jpg')
+
+bg1=pygame.transform.scale(bg1,(1080,720))
 bg2=pygame.transform.scale(bg2,(1080,720))
+bg3=pygame.transform.scale(bg3,(1080,720))
+bg5=pygame.transform.scale(bg4,(1080,720))
+bg5=pygame.transform.scale(bg5,(1080,720))
+
+bg=[bg1,bg2,bg3,bg4,bg5]
+random_bg=random.choice(bg)
+
 bgY=0
-bgY2=bg.get_height()
+bgY2=random_bg.get_height()
 bgX=0
 bgX2=0
 
@@ -181,7 +192,7 @@ def stat(xcor,ycor,score,lives):
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
-    redrawWindow(bg2)
+    redrawWindow(random_bg)
     #clock.tick(speed)
     bgY += bgspeed
     bgY2 +=bgspeed
@@ -199,10 +210,10 @@ while a:
         bullet_state='hold'
         ybullet=yaxis
     
-    if bgY>=bg.get_height():
-        bgY=bg.get_height()*-1
-    if bgY2>=bg.get_height():
-        bgY2=bg.get_height()*-1
+    if bgY>=random_bg.get_height():
+        bgY=random_bg.get_height()*-1
+    if bgY2>=random_bg.get_height():
+        bgY2=random_bg.get_height()*-1
     if bgX>10:
         bgXspeed=-5
     if bgX<0:
