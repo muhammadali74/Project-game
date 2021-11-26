@@ -172,7 +172,6 @@ pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
     redrawWindow(bg2)
-    #clock.tick(speed)
     bgY += bgspeed
     bgY2 +=bgspeed
     clock.tick(fps)
@@ -214,7 +213,6 @@ while a:
                 xc=0
             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                 yc=0
-    # coin_num=random.randint(1,4) torturemode
                 
     xaxis+=xc
     yaxis+=yc
