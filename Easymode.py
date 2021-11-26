@@ -16,6 +16,11 @@ caption=pygame.display.set_caption('Delta SpeedRun')
 icon=pygame.image.load('racing.png')
 pygame.display.set_icon(icon)
 
+mixer.init()
+mixer.music.load("background.wav")
+#mixer.music.set_volume(1)
+mixer.music.play(-1)
+
 fps=60
 clock=pygame.time.Clock()
 
@@ -102,6 +107,11 @@ def obstacle(img,xcor,ycor):
     obsrect=img.get_rect(x=xcor,y=ycor)
     screen.blit(img,(xcor,ycor))
 
+def game_over_text():
+    over_text = over_font.render("GAME OVER", True, (245, 255, 250))
+    score_text= over_font.render(score,True,(245,255,250))
+    screen.blit(over_text, (200, 250))
+    screen.blit(score_text,(200,350))
 
 
 def redrawWindow(background):
