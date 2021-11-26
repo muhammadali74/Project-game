@@ -3,7 +3,6 @@ from pygame.locals import *
 import time
 import os
 import sys
-import math
 import random
 from pygame.constants import *
 from pygame.locals import *
@@ -24,7 +23,7 @@ mixer.init()
 fps=60
 clock=pygame.time.Clock()
 
-bg=pygame.image.load('background1.png')
+bg=pygame.image.load('bgcompressed.jpeg')
 bg2=pygame.image.load('Road pic 1 filter.jpg')
 bg=pygame.transform.scale(bg,(1080,720))
 bg2=pygame.transform.scale(bg2,(1080,720))
@@ -159,7 +158,7 @@ def stat(xcor,ycor,score,lives):
 pygame.time.set_timer(USEREVENT+1,500)
 a=True
 while a:
-    redrawWindow(bg2)
+    redrawWindow(bg)
     #clock.tick(speed)
     bgY += bgspeed
     bgY2 +=bgspeed
@@ -188,10 +187,12 @@ while a:
             if event.key==pygame.K_LEFT:
                 xc=carelative*-1
                 tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
+                tyrescreechSound.set_volume(0.4)
                 tyrescreechSound.play()
             if event.key==pygame.K_RIGHT:
                 xc=carelative
                 tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
+                tyrescreechSound.set_volume(0.4)
                 tyrescreechSound.play()
             if event.key==pygame.K_UP:
                 yc=carelative*-1
