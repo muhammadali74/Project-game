@@ -1,3 +1,7 @@
+'''Easy mode. 
+One of the three difficulty level of the game. 
+The other two difficulty levels are the modified versions of this mode.
+For understanding the code. Refer to this file first before reading the other two mode files'''
 import pygame
 from pygame.locals import *
 import time
@@ -8,6 +12,7 @@ from pygame.constants import *
 from pygame.locals import *
 from pygame import mixer
 
+#initializing pygame, setting bar ucon, caption and initializing screen canvas
 pygame.init()
 pygame.display.init
 screen=pygame.display.set_mode([1080,720],HWSURFACE | DOUBLEBUF | RESIZABLE)
@@ -15,11 +20,12 @@ caption=pygame.display.set_caption('Delta SpeedRun')
 icon=pygame.image.load('racing.png')
 pygame.display.set_icon(icon)
 
+#background music
 mixer.init()
 mixer.music.load("intromusic.mp3")
-mixer.music.play(1)
-mixer.music.set_volume(0.1)
+mixer.music.play(-1)
 
+#canvas background images. bg is short for background
 fps=60
 clock=pygame.time.Clock()
 gameoverwallpaper=pygame.image.load('gameoverwallpaper.jpg')
@@ -30,6 +36,14 @@ bg=pygame.transform.scale(bg,(1080,720))
 bg2=pygame.transform.scale(bg2,(1080,720))
 bgY=0
 bgY2=bg.get_height()
+mainbackground=bg
+
+#function for updating two images simutaneously on the screen to create a scroll bg effect.
+def redrawWindow(background):
+    screen.blit(background,(0,bgY))
+    screen.blit(background,(0,bgY2))
+    #pygame.display.update()
+
 
 car1=pygame.image.load('car.png')       #<div>Icons made by <a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 car2=pygame.image.load('car2.png')      #<div>Icons made by <a href="https://www.flaticon.com/authors/berkahicon" title="berkahicon">berkahicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
@@ -39,38 +53,39 @@ car3=pygame.image.load('car3.png')      #<div>Icons made by <a href="https://www
 
 #obstacle tree <a href="https://www.vecteezy.com/free-vector/tree">Tree Vectors by Vecteezy</a>
 
+#loading car images and setting initial car cordinates
 car1=pygame.transform.scale(car1,(120,120))
 car2=pygame.transform.scale(car2,(120,120))
 car3=pygame.transform.scale(car3,(120,120))
 temp=pygame.transform.scale(car2,(20,100))
+maincar=car1
 xaxis = 500
 yaxis = 570
 xc=0
 yc=0
 
+#function for blitting car on screen and storing car's rectangular cordinates in a variable for collission detection
 def car(pic,pictemp,xcor,ycor):
     global carrect
     temp=pygame.transform.scale(pictemp,(40,70))
     carrect=temp.get_rect(x=xcor+50,y=ycor)
     screen.blit(pic,(xcor,ycor))
 
-def retrybutton(img,xcor,ycor):
-    global buttonrect
-    buttonrect=img.get_rect(x=xcor,y=ycor)
-    screen.blit(img,(xcor,ycor))
+#loading font styles and sizes to be used in various places
+fnt=pygame.font.Font('Orbitron-VariableFont_wght.ttf',28)
+font=pygame.font.Font('Orbitron-VariableFont_wght.ttf',35)
+font2=pygame.font.Font('Orbitron-VariableFont_wght.ttf',50)
+xfnt=0
+yfnt=0
 
-
-def exitbutton(img,xcor,ycor):
-    global exitrect
-    exitrect=img.get_rect(x=xcor,y=ycor)
-    screen.blit(img,(xcor,ycor))
-    
+#function for text when game ends
 def game_over_text():
     over_text =font2.render("GAME OVER", True, (245, 255, 250))
     score_text=font.render("score:   "+str(score), True, (245, 255, 250))
     screen.blit(over_text, (200,300))
     screen.blit(score_text, (200, 450))
 
+#loading button images
 buttonretry=pygame.image.load('buttons.png')
 buttonretry2=pygame.image.load('buttons2.png')
 buttonexit=pygame.image.load('buttonexit.png')
@@ -81,6 +96,17 @@ buttonretry2=pygame.transform.scale(buttonretry2,(190,69))
 buttonexit=pygame.transform.scale(buttonexit,(190,69))
 buttonexit2=pygame.transform.scale(buttonexit2,(190,69))
 
+def retrybutton(img,xcor,ycor):
+    global buttonrect
+    buttonrect=img.get_rect(x=xcor,y=ycor)
+    screen.blit(img,(xcor,ycor))
+
+def exitbutton(img,xcor,ycor):
+    global exitrect
+    exitrect=img.get_rect(x=xcor,y=ycor)
+    screen.blit(img,(xcor,ycor))
+
+#loading obstacles images. obs is short for obstacles
 obs1=pygame.image.load('tree1.png')
 obs2=pygame.image.load('tree2.png')
 obs3=pygame.image.load('tree3.png')
@@ -91,13 +117,8 @@ obs7=pygame.image.load('traffic-barriers.png')
 obs8=pygame.image.load('barrier.png')
 obs9=pygame.image.load('ditch.png')
 obs10=pygame.image.load('obstacle-hole.png')
-# all_obstacles=[]
-# for i in range(1,11):
-#     obsv=pygame.transform.scale((obs+str(i)),(54,54))
-    # all_obstacles.append(obsv)
 
-
-
+#resizing obstacles
 obs1=pygame.transform.scale(obs1,(54,54))
 obs2=pygame.transform.scale(obs2,(54,54))
 obs3=pygame.transform.scale(obs3,(54,54))
@@ -109,6 +130,7 @@ obs8=pygame.transform.scale(obs8,(54,54))
 obs9=pygame.transform.scale(obs9,(54,54))
 obs10=pygame.transform.scale(obs10,(54,54))
 
+#making list of all obstacles, obstacle's x,y cordinates inorder to call them randomly during game at random cordinates
 all_obstacles=[obs1,obs2,obs3,obs4,obs5,obs6,obs7,obs8,obs9,obs10]
 random_obstacles=random.choice(all_obstacles)
 obstacle_num=random.randint(8,10)
@@ -117,8 +139,7 @@ xobs=[]
 yobs=[]
 positionx=[]
 positiony=[]
-# xobs = random.randint(180,790)
-# yobs = -100
+# yc stands for Y Change
 ycobs=3
 for i in range(obstacle_num):
     random_obstacles=random.choice(all_obstacles)
@@ -128,35 +149,37 @@ for i in range(obstacle_num):
     positionx.append(random.randint(180,790))
     positiony.append(random.randint(-1200,-200))
 
+#blitting obstacles on screen and getting its cordinates for collission detection
 def obstacle(img,xcor,ycor):
     global obsrect
     obsrect=img.get_rect(x=xcor,y=ycor)
     screen.blit(img,(xcor,ycor))
 
-def redrawWindow(background):
-    screen.blit(background,(0,bgY))
-    screen.blit(background,(0,bgY2))
-    #pygame.display.update()
-    
+#loading coin reward image and setting its random cordinates
 coin=pygame.image.load('dollar.png')#<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>#
 coin=pygame.transform.scale(coin,(30,30))
 xcoin=random.randint(180,790)
 ycoin=random.randint(-1200,-200)
 
+#blitting coins on screen and getting its cordinates for collission detection
 def coinreward(pic,xcor,ycor):
     global coinrect
     coinrect=pic.get_rect(x=xcor,y=ycor)
     screen.blit(pic,(xcor,ycor))
 
+#loading bullet image and setting its initial cordinates, and state.
 bullet=pygame.image.load('bullet.png')
 bullet=pygame.transform.scale(bullet,(28,28))
 xbullet=0
 ybullet=yaxis
+#xc means x change
+#yc means y change
 xcbullet=0
 ycbullet=-10
 bullet_state='hold'
 bulrect=bullet.get_rect(x=xbullet,y=ybullet)
 
+#function for blitting bullet on screen and getting its cordinates. Note: 'goli' is another name for bullet in 'Urdu language'
 def goli(image,xcor,ycor):
     global bulrect
     bulrect=image.get_rect(x=xcor+40,y=ycor+10)
@@ -164,32 +187,31 @@ def goli(image,xcor,ycor):
     bullet_state='fire'
     screen.blit(image,(xcor+40,ycor+10))
 
+#variables to store some important game quantities
 score=0
 lives=200
-speed=120
 bgspeed=3
 carelative=3
 
-fnt=pygame.font.Font('Orbitron-VariableFont_wght.ttf',28)
-font=pygame.font.Font('Orbitron-VariableFont_wght.ttf',35)
-font2=pygame.font.Font('Orbitron-VariableFont_wght.ttf',50)
-xfnt=0
-yfnt=0
 
+#function for displaying current stats (score, car health) on screen
 def stat(xcor,ycor,score,lives):
     status=fnt.render('Score: '+ str(score),True,(255,255,255))
     life=fnt.render('Health: '+ ('|'*(lives//2)),True,(255,255,255))
     screen.blit(status,(xcor,ycor))
     screen.blit(life,(xfnt,yfnt+30))
-pygame.time.set_timer(USEREVENT+1,500)
-a=True
+# pygame.time.set_timer(USEREVENT+1,500)
+
+#boolean variables needed for maintaning flow of game
+loop1=True
 mainloop=True
-b=True
+loop2=True
 while mainloop:
-    while a:
+    while loop1:
+        mixer.music.set_volume(0.1)
         click=False
-        redrawWindow(bg)
-        #clock.tick(speed)
+        redrawWindow(mainbackground)
+        #to scroll background we need to constantly change its cordinates
         bgY += bgspeed
         bgY2 +=bgspeed
         clock.tick(fps)
@@ -200,23 +222,23 @@ while mainloop:
         if ybullet<=0:
             bullet_state='hold'
             ybullet=yaxis
-        
+        #for slide one background image just afetr the other so that it creates a continouos movement effect
         if bgY>=bg.get_height():
             bgY=bg.get_height()*-1
         if bgY2>=bg.get_height():
             bgY2=bg.get_height()*-1
-            
+
+        #detecting several events during game including key presses and executing instructions accordingly
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 mainloop=False
-                a=False
-            if event.type==USEREVENT+1:
-                speed +=5
+                loop1=False
+            # if event.type==USEREVENT+1:
+            #     speed +=5
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_ESCAPE:
-                    # mainloop=False
-                    b=True
-                    a=False
+                    loop2=True
+                    loop1=False
                 if event.key==pygame.K_LEFT:
                     xc=carelative*-1
                     tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
@@ -236,16 +258,31 @@ while mainloop:
                     goli(bullet, xbullet,ybullet)
                     laserSound=pygame.mixer.Sound("laser.wav")
                     laserSound.play()
+                if event.key==pygame.K_1:
+                    mainbackground=bg
+                if event.key==pygame.K_2:
+                    mainbackground=bg2
+                if event.key==pygame.K_3:
+                    pass
+                if event.key==pygame.K_4:
+                    pass
+                if event.key==pygame.K_q:
+                    maincar=car1
+                if event.key==pygame.K_w:
+                    maincar=car2
+                if event.key==pygame.K_e:
+                    maincar=car3
             
             if event.type==pygame.KEYUP:
                 if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
                     xc=0
                 if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                     yc=0
-        # coin_num=random.randint(1,4) torturemode
-                    
+
+        #changing cordinates of car as per user's input            
         xaxis+=xc
         yaxis+=yc
+        #restrcting car to remain within the boundaries
         if xaxis<=180:
             xaxis=180
         if xaxis>=790:
@@ -255,7 +292,8 @@ while mainloop:
         if yaxis>=600:
             yaxis=600
         
-        car(car2,temp,xaxis,yaxis)
+        car(maincar,temp,xaxis,yaxis)
+        #for displaying, manipulating obstacles at random positions after random time
         for i in range(obstacle_num):
             obstacle(obs[i],xobs[i],yobs[i])
             yobs[i]+=ycobs
@@ -266,10 +304,12 @@ while mainloop:
                 score+=1
                 yobs[i]=positiony[i]
                 xobs[i]=positionx[i]
+            #for detecting collision between car and obstacle
             if pygame.Rect.colliderect(carrect,obsrect):
                 lives-=1
                 carcrashSound=pygame.mixer.Sound('carcrash.mp3')
                 carcrashSound.play()
+            #for detecting collision between bullet and obstacle
             if pygame.Rect.colliderect(bulrect,obsrect) and bullet_state=='fire':
                 explosionSound=pygame.mixer.Sound('explosion.wav')
                 woodcrashSound=pygame.mixer.Sound('woodcrash.mp3')
@@ -286,51 +326,55 @@ while mainloop:
         if ycoin>720:
             ycoin=random.randint(-100,-20)
             xcoin=random.randint(180,790)
+        #for detecting collision between car and coin
         elif pygame.Rect.colliderect(coinrect,carrect):
             score+=5
             ycoin=random.randint(-100,-20)
             xcoin=random.randint(180,790)
             print('add 5')
 
-        
+        #for increasing game speed after user reaches a threshlod value
         if score%20==0 and score!=0:
-            ycobs+=1
-            bgspeed+=1
-            carelative+=1
+            ycobs+=0.01
+            bgspeed+=0.01
+            carelative+=0.01
 
-        
+        # exit if health is zero
         if lives<=0:
-            a=False
-            b=True
-
+            loop1=False
+            loop2=True
         #print('|'*lives)
         stat(xfnt,yfnt,score,lives)
+        #assigning new random positions to obstacles
         positionx=[random.randint(180,790) for x in range(obstacle_num)]
         positiony=[random.randint(-1200,-200) for x in range(obstacle_num)]
         
 
         pygame.display.update()
     
-    while b:
-        mixer.music.set_volume(1)
+    while loop2:
+        mixer.music.set_volume(0.6)
         click=False
         screen.blit(gameoverwallpaper,(0,0))
         game_over_text()
         retrybutton(buttonretry,870,520)
         exitbutton(buttonexit,870,620)
+        #get the mouse pointer position
         mousepos=pygame.mouse.get_pos()
 
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
-                b=False
+                loop2=False
                 mainloop=False
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_ESCAPE:
-                    b=False
+                    loop2=False
                     mainloop=False
+        #for checking if mouse hover and/or clicks the button image
         if buttonrect.collidepoint(mousepos):
             retrybutton(buttonretry2,870,520)
             if pygame.mouse.get_pressed()[0]==1 and click==False:
+                #resetting game settings
                 score=0
                 lives=200
                 xaxis=500
@@ -348,12 +392,12 @@ while mainloop:
                     positiony.append(random.randint(-1200,-200))
                 bgspeed=3
                 ycobs=3
-                a=True
-                b=False
+                loop1=True
+                loop2=False
         if exitrect.collidepoint(mousepos):
             exitbutton(buttonexit2,870,620)
             if pygame.mouse.get_pressed()[0]==1 and click==False:
-                b=False
+                loop2=False
                 mainloop=False
 
         pygame.display.update()
