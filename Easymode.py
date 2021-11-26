@@ -16,6 +16,11 @@ caption=pygame.display.set_caption('Delta SpeedRun')
 icon=pygame.image.load('racing.png')
 pygame.display.set_icon(icon)
 
+mixer.init()
+mixer.music.load("background.wav")
+#mixer.music.set_volume(1)
+mixer.music.play(-1)  #-------> to play on loop
+
 fps=60
 clock=pygame.time.Clock()
 
@@ -48,8 +53,11 @@ def car(pic,pictemp,xcor,ycor):
     temp=pygame.transform.scale(pictemp,(40,70))
     carrect=temp.get_rect(x=xcor+50,y=ycor)
     screen.blit(pic,(xcor,ycor))
-
     
+def game_over_text():
+    over_text = over_font.render("GAME OVER", True, (245, 255, 250))
+    screen.blit(over_text, (200, 250))
+
 obs1=pygame.image.load('tree1.png')
 obs2=pygame.image.load('tree2.png')
 obs3=pygame.image.load('tree3.png')
@@ -100,9 +108,7 @@ for i in range(obstacle_num):
 def obstacle(img,xcor,ycor):
     global obsrect
     obsrect=img.get_rect(x=xcor,y=ycor)
-    screen.blit(img,(xcor,ycor))
-
-
+    screen.blit(img,(xcor,ycor)
 
 def redrawWindow(background):
     screen.blit(background,(0,bgY))
@@ -114,13 +120,10 @@ coin=pygame.transform.scale(coin,(30,30))
 xcoin=random.randint(180,790)
 ycoin=random.randint(-1200,-200)
 
-
-
 def coinreward(pic,xcor,ycor):
     global coinrect
     coinrect=pic.get_rect(x=xcor,y=ycor)
     screen.blit(pic,(xcor,ycor))
-
 
 bullet=pygame.image.load('bullet.png')
 bullet=pygame.transform.scale(bullet,(28,28))
@@ -164,6 +167,9 @@ while a:
 
     if bullet_state is 'fire':
         goli(bullet,xbullet,ybullet)
+        laserSound=pygame.mixer.Sound("laser.wav")
+        laserSound.play()
+        clock.sleep(0.5)   #---->is it needed?
         ybullet+=ycbullet
     if ybullet<=0:
         bullet_state='hold'
@@ -251,6 +257,7 @@ while a:
 
     
     if lives==0:
+        game_over_text()
         a=False
 
     #print('|'*lives)
