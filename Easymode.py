@@ -17,9 +17,9 @@ icon=pygame.image.load('racing.png')
 pygame.display.set_icon(icon)
 
 mixer.init()
-mixer.music.load("background.wav")
+#mixer.music.load("background.wav")
 #mixer.music.set_volume(1)
-mixer.music.play(-1)  #-------> to play on loop
+#mixer.music.play(-1)  #-------> to play on loop
 
 fps=60
 clock=pygame.time.Clock()
@@ -108,7 +108,7 @@ for i in range(obstacle_num):
 def obstacle(img,xcor,ycor):
     global obsrect
     obsrect=img.get_rect(x=xcor,y=ycor)
-    screen.blit(img,(xcor,ycor)
+    screen.blit(img,(xcor,ycor))
 
 def redrawWindow(background):
     screen.blit(background,(0,bgY))
@@ -167,9 +167,6 @@ while a:
 
     if bullet_state is 'fire':
         goli(bullet,xbullet,ybullet)
-        laserSound=pygame.mixer.Sound("laser.wav")
-        laserSound.play()
-        clock.sleep(0.5)   #---->is it needed?
         ybullet+=ycbullet
     if ybullet<=0:
         bullet_state='hold'
@@ -190,8 +187,12 @@ while a:
                 a=False
             if event.key==pygame.K_LEFT:
                 xc=carelative*-1
+                tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
+                tyrescreechSound.play()
             if event.key==pygame.K_RIGHT:
                 xc=carelative
+                tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
+                tyrescreechSound.play()
             if event.key==pygame.K_UP:
                 yc=carelative*-1
             if event.key==pygame.K_DOWN:
@@ -199,6 +200,8 @@ while a:
             if event.key==pygame.K_SPACE and bullet_state=='hold':
                 xbullet=xaxis
                 goli(bullet, xbullet,ybullet)
+                laserSound=pygame.mixer.Sound("laser.wav")
+                laserSound.play()
         
         if event.type==pygame.KEYUP:
             if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
@@ -231,7 +234,13 @@ while a:
             xobs[i]=positionx[i]
         if pygame.Rect.colliderect(carrect,obsrect):
             lives-=1
+            carcrashSound=pygame.mixer.Sound('carcrash.mp3')
+            carcrashSound.play()
         if pygame.Rect.colliderect(bulrect,obsrect) and bullet_state=='fire':
+            explosionSound=pygame.mixer.Sound('explosion.wav')
+            woodcrashSound=pygame.mixer.Sound('woodcrash.mp3')
+            randomsound=random.choice([explosionSound,woodcrashSound])
+            randomsound.play()
             yobs[i]=positiony[i]
             xobs[i]=positionx[i]
             bullet_state='hold'
