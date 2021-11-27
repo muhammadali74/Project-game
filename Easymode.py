@@ -30,7 +30,7 @@ fps=60
 clock=pygame.time.Clock()
 gameoverwallpaper=pygame.image.load('gameoverwallpaper.jpg')
 gameoverwallpaper=pygame.transform.scale(gameoverwallpaper,(1080,720))
-bg=pygame.image.load('bgcompressed.jpeg')
+bg=pygame.image.load('bgcompressed.jpeg')  #Downlaoded from a copyright free source. 
 bg2=pygame.image.load('Road pic 1 filter.jpg')
 bg=pygame.transform.scale(bg,(1080,720))
 bg2=pygame.transform.scale(bg2,(1080,720))
@@ -51,7 +51,6 @@ car3=pygame.image.load('car3.png')      #<div>Icons made by <a href="https://www
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 
-#obstacle tree <a href="https://www.vecteezy.com/free-vector/tree">Tree Vectors by Vecteezy</a>
 
 #loading car images and setting initial car cordinates
 car1=pygame.transform.scale(car1,(120,120))
@@ -107,16 +106,16 @@ def exitbutton(img,xcor,ycor):
     screen.blit(img,(xcor,ycor))
 
 #loading obstacles images. obs is short for obstacles
-obs1=pygame.image.load('tree1.png')
+obs1=pygame.image.load('tree1.png') #obstacle tree <a href="https://www.vecteezy.com/free-vector/tree">Tree Vectors by Vecteezy</a>
 obs2=pygame.image.load('tree2.png')
 obs3=pygame.image.load('tree3.png')
 obs4=pygame.image.load('tree4.png')
 obs5=pygame.image.load('tree5.png')
 obs6=pygame.image.load('cones.png')
-obs7=pygame.image.load('traffic-barriers.png')
-obs8=pygame.image.load('barrier.png')
-obs9=pygame.image.load('ditch.png')
-obs10=pygame.image.load('obstacle-hole.png')
+obs7=pygame.image.load('traffic-barriers.png') #Source: flaticon.com
+obs8=pygame.image.load('barrier.png')   #Source: flaticon.com
+obs9=pygame.image.load('ditch.png') #Source: flaticon.com
+obs10=pygame.image.load('obstacle-hole.png')    #Source: flaticon.com
 
 #resizing obstacles
 obs1=pygame.transform.scale(obs1,(54,54))
@@ -168,7 +167,7 @@ def coinreward(pic,xcor,ycor):
     screen.blit(pic,(xcor,ycor))
 
 #loading bullet image and setting its initial cordinates, and state.
-bullet=pygame.image.load('bullet.png')
+bullet=pygame.image.load('bullet.png') #source: flaticon.com
 bullet=pygame.transform.scale(bullet,(28,28))
 x_bullet=0
 y_bullet=yaxis
