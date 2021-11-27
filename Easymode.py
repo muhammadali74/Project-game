@@ -241,12 +241,12 @@ while mainloop:
                 if event.key==pygame.K_LEFT:
                     x_change=carelative*-1
                     tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
-                    tyrescreechSound.set_volume(0.4)
+                    tyrescreechSound.set_volume(0.2)
                     tyrescreechSound.play()
                 if event.key==pygame.K_RIGHT:
                     x_change=carelative
                     tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
-                    tyrescreechSound.set_volume(0.4)
+                    tyrescreechSound.set_volume(0.2)
                     tyrescreechSound.play()
                 if event.key==pygame.K_UP:
                     y_change=carelative*-1
