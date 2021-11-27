@@ -109,12 +109,6 @@ obs7=pygame.image.load('traffic-barriers.png')
 obs8=pygame.image.load('barrier.png')
 obs9=pygame.image.load('ditch.png')   
 obs10=pygame.image.load('obstacle-hole.png')
-# all_obstacles=[]
-# for i in range(1,11):
-#     obsv=pygame.transform.scale((obs+str(i)),(54,54))
-    # all_obstacles.append(obsv)
-
-
 
 obs1=pygame.transform.scale(obs1,(54,54))
 obs2=pygame.transform.scale(obs2,(54,54))
@@ -238,7 +232,7 @@ while mainloop:
             bullet_state='hold'
             ybullet=yaxis
         
-        if bgY>=bg.get_height():
+        if bgY>=bg.get_height():               #RESETTING BACKGROUND
             bgY=bg.get_height()*-1
         if bgY2>=bg.get_height():
             bgY2=bg.get_height()*-1
