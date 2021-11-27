@@ -1,78 +1,129 @@
 import pygame
-import button
 from pygame.locals import *
-import time
-import os
-import sys
-import math
-import random
-from pygame.constants import *
-from pygame.locals import *
+from pygame.constants import MOUSEBUTTONDOWN
 
-screen = pygame.display.set_mode((1080, 720))
+# displaying background and capttion
+pygame.init()
+pygame.display.init
+screen=pygame.display.set_mode([1080,720],HWSURFACE | DOUBLEBUF | RESIZABLE)
+#screen = pygame.display.set_mode([1080, 720])
 caption = pygame.display.set_caption('Delta SpeedRun')
-bg = pygame.image.load('Road pic 1 filter.jpg')
-bg = pygame.transform.scale(bg2, (1080, 720))
+icon=pygame.image.load('racing.png')
+pygame.display.set_icon(icon)
+bg = pygame.image.load('gameoverwallpaper.jpg')
+bg = pygame.transform.scale(bg, (1080, 720))
 
-start_img = pygame.image.load('Start game button.png')
-options_img = pygame.image.load('Options button.png')
-exit_img = pygame.image.load('Quit game button.png')
+#loading button images
+start_img = pygame.image.load('buttonstart.png')
+start_img1 = pygame.image.load('buttonstart1.png')
+exit_img = pygame.image.load('buttonexit.png')
+exit_img1 = pygame.image.load('buttonexit2.png')
+easy_img=pygame.image.load('buttoneasy.png')
+easy_img1=pygame.image.load('buttoneasy1.png')
+hard_img=pygame.image.load('buttonhard.png')
+hard_img1=pygame.image.load('buttonhard1.png')
+torture_img=pygame.image.load('buttontorture.png')
+torture_img1=pygame.image.load('buttontorture1.png')
+'''options_img = pygame.image.load('Options button.png')
 cars_img = pygame.image.load('cars button.png')
 bg_img = pygame.image.load('bg button.png')
 car1_img = pygame.image.load('car.png')
 car2_img = pygame.image.load('car2.png')
 car3_img = pygame.image.load('car3.png')
-back_img = pygame.image.load('back arrow.jpg')
-difficulty_img=pygame.image.load('difficulty_img.png')
+back_img = pygame.image.load('back arrow.jpg')'''
 
-car1_img = pygame.transform.scale(car1, (120, 120))
-car2_img= pygame.transform.scale(car2, (120, 120))
-car3_img = pygame.transform.scale(car3, (120, 120))
+start_img = pygame.transform.scale(start_img, (120, 120))
+start1_img = pygame.transform.scale(start_img1, (120, 120))
+exit_img=pygame.transform.scale(exit_img, (120, 120))
+exit_img1=pygame.transform.scale(exit_img1, (120, 120))
+easy_img1=pygame.transform.scale(easy_img, (120, 120))
+easy_img1=pygame.transform.scale(easy_img1, (120, 120))
+hard_img=pygame.transform.scale(hard_img, (120, 120))
+hard_img1=pygame.transform.scale(hard_img1, (120, 120))
+torture_img=pygame.transform.scale(torture_img, (120, 120))
+torture_img1=pygame.transform.scale(torture_img1, (120, 120))
+'''car1_img = pygame.transform.scale(car1_img, (120, 120))
+car2_img= pygame.transform.scale(car2_img, (120, 120))
+car3_img = pygame.transform.scale(car3_img, (120, 120))
 back_img = pygame.transform.scale(back_img, (120, 120))
+bg_img = pygame.transform.scale(bg_img, (120, 120))
+cars_img=pygame.transform.scale(cars_img,(120,120))
+difficulty_img=pygame.transform.scale(difficulty_img,(120,120))'''
 
+'''car1=car1_img.get_rect()
+car2=car2_img.get_rect()
+car3=car3_img.get_rect()
+back=back_img.get_rect()
+bg_button=bg_img.get_rect()
+cars_button=cars_img.get_rect()
+difficulty_button=difficulty_img.get_rect()'''
+'''exit_img=exit_img.get_rect()
+start_img=start_img.get_rect()
+easy_img=easy_img.get_rect()
+hard_img=hard_img.get_rect()
+torture_img=torture_img.get_rect()'''
 
 class Button():
-  def __init__(self, x, y, image):
-      self.rect = self.image.get_rect()
-        # self.rect.topleft = (x, y)    why is this needed?
-        # self.clicked = False
+    def __init__(self, x, y, image):
+        self.rect = image.get_rect()
+        self.rect.topleft = (x, y)   # why is this needed?
+        self.clicked = False
 
-  def draw(self,  # surface):
-      action=False
-      pos = pygame.mouse.get_pos()
-      
-      if self==cars_button:
-          screen.blit(car1_img,(350,400))
-          screen.blit(car2_img,(500,400))
-          screen.blit(car3_img,(650,400))
+    def draw(self):     
+        action=False
+        pos = pygame.mouse.get_pos()
+        #run1=False
+        '''if self==cars_button:
+            screen.blit(car1_img,(350,400))
+            screen.blit(car2_img,(500,400))
+            screen.blit(car3_img,(650,400))
           
-      elif self==bg_button:
-          screen.blit(bg1_img,(350,400))
-          screen.blit(bg2_img,(500,400))
-          screen.blit(bg3_img,(650,400))
+        elif self==bg_button:
+            screen.blit(bg1,(350,400))
+            screen.blit(bg2,(500,400))
+            screen.blit(bg3,(650,400))
           
-      elif self==difficulty_img:
-          screen.blit(easy_img,(350,400))
-          screen.blit(hard_img,(500,400))
-          screen.blit(torture_img,(650,400))
+        elif self==difficulty_img:
+            screen.blit(easy_img,(350,400))
+            screen.blit(hard_img,(500,400))
+            screen.blit(torture_img,(650,400))'''
           
-      else:
         if self.rect.collidepoint(pos):
-            if pygame.mouse.get_pressed()[0] == 1:  # and self.clicked == False:   #[0] for left mouse clicks
-              #self.clicked = True
-              action = True
+            if self==start_img:
+                screen.blit(start_img1,(self.rect.x,self.rect.y))
+            elif self==exit_img:
+               screen.blit(exit_img1,(self.rect.x,self.rect.y)) 
+            elif self==easy_img:
+                screen.blit(easy_img1,(self.rect.x,self.rect.y))
+            elif self==hard_img:
+                screen.blit(hard_img1,(self.rect.x,self.rect.y))
+            elif self==torture_img:
+                screen.blit(torture_img1,(self.rect.x,self.rect.y))
+                
 
-        # if pygame.mouse.get_pressed()[0] == 0:
-        # self.clicked = False
+            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:   
+                self.clicked = True
+                action = True
+                #if self==start_img:
+                    #screen.blit(easy_img,(350,400))
+                    #screen.blit(hard_img,(500,400))
+                    #screen.blit(torture_img,(650,400))
 
-        surface.blit(self.image, (self.rect.x, self.rect.y))
-        # screen
 
-        return action
 
-  def drawCars(self):
-    action = False
-    pos = pygame.mouse.get_pos()
+            if pygame.mouse.get_pressed()[0] == 0:
+                self.clicked = False
+
+            screen.blit(self.image, (self.rect.x, self.rect.y))
+
+            return action
+
+        
+            
+
+    '''def drawCars(self):
+        action = False
+        pos = pygame.mouse.get_pos()
 
     if self.rect.collidepoint(pos):
       if pygame.mouse.get_pressed()[0] == 1:  # and self.clicked == False:   #[0] for left mouse clicks
@@ -85,18 +136,21 @@ class Button():
     surface.blit(self.image, (self.rect.x, self.rect.y))
     # screen
 
-    return action
+    return action'''
 
     
 
 
 start_button = Button(540, 200, start_img)
-options_button = Button(540, 350, options_img)
 exit_button = Button(540, 500, exit_img)
-cars_button = Button(540, 200, cars_img)
-bg_button = Button(540, 350, bg_img)
-difficulty_button = Button(540, 500, difficulty_img)
-back_button = Button(50, 700, back_img)
+easy_button=Button(540,200,easy_img)
+hard_button=Button(540,350,hard_img)
+torture_button=Button(540,500,torture_img)
+#options_button = Button(540, 350, options_img)
+#cars_button = Button(540, 200, cars_img)
+#bg_button = Button(540, 350, bg_img)
+#difficulty_button = Button(540, 500, difficulty_img)
+#back_button = Button(50, 700, back_img)
 
 run = True
 while run:
@@ -104,34 +158,47 @@ while run:
     # pressed1 = pygame.mouse.get_pressed()[0]
     # screen.fill((202,228,241))
     if start_button.draw():
+        screen.blit(easy_img,(350,400))
+        screen.blit(hard_img,(500,400))
+        screen.blit(torture_img,(650,400))
+        pygame.display.update()
+        if easy_button.draw():
+            mode='Easy'
+        elif hard_button.draw():
+            mode='Hard'
+        elif torture_button.draw():
+            mode='Torture'
 
-    elif options_button.draw():
-      a=True
-      while a:
-        if back_button.draw():
-            break
-        elif cars_button.draw():
-            if car1_button.draw():
-               vehicle=car1
-               continue
-            elif car2_button.draw():
-                   vehicle=car2
-                   continue
-            elif car3_button.draw():
-                   vehicle=car3
-                   continue
-           
-        elif bg_button.draw():
-             if bg1_button.draw():
-               background=bg1
-               continue
-             elif bg2_button.draw():
-                background=bg2
-                continue
-             elif bg3_button.draw():
-                background=bg3
-                continue
-           
+    elif exit_button.draw():
+        run=False
+
+    '''elif options_button.draw():
+        a=True
+        while a:
+            if back_button.draw():
+                break
+            elif cars_button.draw():
+                if car1_button.draw():
+                    vehicle=car1
+                    continue
+                elif car2_button.draw():
+                    vehicle=car2
+                    continue
+                elif car3_button.draw():
+                    vehicle=car3
+                    continue
+                
+            elif bg_button.draw():
+                if bg1_button.draw():
+                    background=bg1
+                    continue
+                elif bg2_button.draw():
+                    background=bg2
+                    continue
+                elif bg3_button.draw():
+                    background=bg3
+                    continue
+            
         
         elif difficulty_button.draw():
              if easy_button.draw():
@@ -142,15 +209,15 @@ while run:
                 continue
              elif torture_button.draw():
                 difficulty_level=torture
-                continue
+                continue'''
         
         
-    elif exit_button.draw():
+    '''elif exit_button.draw():
        run= False
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if
+        if'''
 
 pygame.quit()
