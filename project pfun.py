@@ -324,6 +324,8 @@ while mainloop:
             xcoin=random.randint(180,790)
         elif pygame.Rect.colliderect(coinrect,carrect):
             score+=5
+            coinchime=pygame.mixer.Sound('coin chime.mp3')
+            coinchime.play()
             ycoin=random.randint(-100,-20)
             xcoin=random.randint(180,790)
             print('add 5')

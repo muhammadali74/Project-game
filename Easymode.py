@@ -61,8 +61,8 @@ temp=pygame.transform.scale(car2,(20,100))
 maincar=car1
 xaxis = 500
 yaxis = 570
-xc=0
-yc=0
+x_change=0
+y_change=0
 
 #function for blitting car on screen and storing car's rectangular cordinates in a variable for collission detection
 def car(pic,pictemp,xcor,ycor):
@@ -135,19 +135,19 @@ all_obstacles=[obs1,obs2,obs3,obs4,obs5,obs6,obs7,obs8,obs9,obs10]
 random_obstacles=random.choice(all_obstacles)
 obstacle_num=random.randint(8,10)
 obs=[]
-xobs=[]
-yobs=[]
-positionx=[]
-positiony=[]
+x_obstacle=[]
+y_obstacle=[]
+random_positionx=[]
+random_positiony=[]
 # yc stands for Y Change
-ycobs=3
+y_change_obstacle=3
 for i in range(obstacle_num):
     random_obstacles=random.choice(all_obstacles)
     obs.append(random_obstacles)
-    xobs.append(random.randint(180,790))
-    yobs.append(random.randint(-1200,-200))
-    positionx.append(random.randint(180,790))
-    positiony.append(random.randint(-1200,-200))
+    x_obstacle.append(random.randint(180,790))
+    y_obstacle.append(random.randint(-1200,-200))
+    random_positionx.append(random.randint(180,790))
+    random_positiony.append(random.randint(-1200,-200))
 
 #blitting obstacles on screen and getting its cordinates for collission detection
 def obstacle(img,xcor,ycor):
@@ -170,17 +170,17 @@ def coinreward(pic,xcor,ycor):
 #loading bullet image and setting its initial cordinates, and state.
 bullet=pygame.image.load('bullet.png')
 bullet=pygame.transform.scale(bullet,(28,28))
-xbullet=0
-ybullet=yaxis
+x_bullet=0
+y_bullet=yaxis
 #xc means x change
 #yc means y change
-xcbullet=0
-ycbullet=-10
+x_change_bullet=0
+y_change_bullet=-10
 bullet_state='hold'
-bulrect=bullet.get_rect(x=xbullet,y=ybullet)
+bulrect=bullet.get_rect(x=x_bullet,y=y_bullet)
 
-#function for blitting bullet on screen and getting its cordinates. Note: 'goli' is another name for bullet in 'Urdu language'
-def goli(image,xcor,ycor):
+#function for blitting bullet on screen and getting its cordinates.
+def gun(image,xcor,ycor):
     global bulrect
     bulrect=image.get_rect(x=xcor+40,y=ycor+10)
     global bullet_state
@@ -217,11 +217,11 @@ while mainloop:
         clock.tick(fps)
 
         if bullet_state == 'fire':
-            goli(bullet,xbullet,ybullet)
-            ybullet+=ycbullet
-        if ybullet<=0:
+            gun(bullet,x_bullet,y_bullet)
+            y_bullet+=y_change_bullet
+        if y_bullet<=0:
             bullet_state='hold'
-            ybullet=yaxis
+            y_bullet=yaxis
         #for slide one background image just afetr the other so that it creates a continouos movement effect
         if bgY>=bg.get_height():
             bgY=bg.get_height()*-1
@@ -240,22 +240,22 @@ while mainloop:
                     loop2=True
                     loop1=False
                 if event.key==pygame.K_LEFT:
-                    xc=carelative*-1
+                    x_change=carelative*-1
                     tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
                     tyrescreechSound.set_volume(0.4)
                     tyrescreechSound.play()
                 if event.key==pygame.K_RIGHT:
-                    xc=carelative
+                    x_change=carelative
                     tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
                     tyrescreechSound.set_volume(0.4)
                     tyrescreechSound.play()
                 if event.key==pygame.K_UP:
-                    yc=carelative*-1
+                    y_change=carelative*-1
                 if event.key==pygame.K_DOWN:
-                    yc=carelative
+                    y_change=carelative
                 if event.key==pygame.K_SPACE and bullet_state=='hold':
-                    xbullet=xaxis
-                    goli(bullet, xbullet,ybullet)
+                    x_bullet=xaxis
+                    gun(bullet, x_bullet,y_bullet)
                     laserSound=pygame.mixer.Sound("laser.wav")
                     laserSound.play()
                 if event.key==pygame.K_1:
@@ -275,13 +275,13 @@ while mainloop:
             
             if event.type==pygame.KEYUP:
                 if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
-                    xc=0
+                    x_change=0
                 if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
-                    yc=0
+                    y_change=0
 
         #changing cordinates of car as per user's input            
-        xaxis+=xc
-        yaxis+=yc
+        xaxis+=x_change
+        yaxis+=y_change
         #restrcting car to remain within the boundaries
         if xaxis<=180:
             xaxis=180
@@ -295,15 +295,15 @@ while mainloop:
         car(maincar,temp,xaxis,yaxis)
         #for displaying, manipulating obstacles at random positions after random time
         for i in range(obstacle_num):
-            obstacle(obs[i],xobs[i],yobs[i])
-            yobs[i]+=ycobs
-            if yobs[i]>1080:
-                yobs[i]=positiony[i]
-                xobs[i]=positionx[i]
-            if yobs[i]>720:
+            obstacle(obs[i],x_obstacle[i],y_obstacle[i])
+            y_obstacle[i]+=y_change_obstacle
+            if y_obstacle[i]>1080:
+                y_obstacle[i]=random_positiony[i]
+                x_obstacle[i]=random_positionx[i]
+            if y_obstacle[i]>720:
                 score+=1
-                yobs[i]=positiony[i]
-                xobs[i]=positionx[i]
+                y_obstacle[i]=random_positiony[i]
+                x_obstacle[i]=random_positionx[i]
             #for detecting collision between car and obstacle
             if pygame.Rect.colliderect(carrect,obsrect):
                 lives-=1
@@ -315,27 +315,30 @@ while mainloop:
                 woodcrashSound=pygame.mixer.Sound('woodcrash.mp3')
                 randomsound=random.choice([explosionSound,woodcrashSound])
                 randomsound.play()
-                yobs[i]=positiony[i]
-                xobs[i]=positionx[i]
+                y_obstacle[i]=random_positiony[i]
+                x_obstacle[i]=random_positionx[i]
                 bullet_state='hold'
-                ybullet=yaxis
-                bulrect=bullet.get_rect(x=xbullet,y=ybullet) #might not be needed
+                y_bullet=yaxis
+                score+=1
+                bulrect=bullet.get_rect(x=x_bullet,y=y_bullet) #might not be needed
 
         coinreward(coin,xcoin,ycoin)
-        ycoin+=ycobs
+        ycoin+=y_change_obstacle
         if ycoin>720:
             ycoin=random.randint(-100,-20)
             xcoin=random.randint(180,790)
         #for detecting collision between car and coin
         elif pygame.Rect.colliderect(coinrect,carrect):
             score+=5
+            coinchime=pygame.mixer.Sound('coin chime.mp3')
+            coinchime.play()
             ycoin=random.randint(-100,-20)
             xcoin=random.randint(180,790)
             print('add 5')
 
         #for increasing game speed after user reaches a threshlod value
         if score%20==0 and score!=0:
-            ycobs+=0.01
+            y_change_obstacle+=0.01
             bgspeed+=0.01
             carelative+=0.01
 
@@ -346,8 +349,8 @@ while mainloop:
         #print('|'*lives)
         stat(xfnt,yfnt,score,lives)
         #assigning new random positions to obstacles
-        positionx=[random.randint(180,790) for x in range(obstacle_num)]
-        positiony=[random.randint(-1200,-200) for x in range(obstacle_num)]
+        random_positionx=[random.randint(180,790) for x in range(obstacle_num)]
+        random_positiony=[random.randint(-1200,-200) for x in range(obstacle_num)]
         
 
         pygame.display.update()
@@ -379,19 +382,19 @@ while mainloop:
                 lives=200
                 xaxis=500
                 yaxis=570
-                xobs=[]
-                yobs=[]
-                positionx=[]
-                positiony=[]
+                x_obstacle=[]
+                y_obstacle=[]
+                random_positionx=[]
+                random_positiony=[]
                 for i in range(obstacle_num):
                     random_obstacles=random.choice(all_obstacles)
                     obs.append(random_obstacles)
-                    xobs.append(random.randint(180,790))
-                    yobs.append(random.randint(-1200,-200))
-                    positionx.append(random.randint(180,790))
-                    positiony.append(random.randint(-1200,-200))
+                    x_obstacle.append(random.randint(180,790))
+                    y_obstacle.append(random.randint(-1200,-200))
+                    random_positionx.append(random.randint(180,790))
+                    random_positiony.append(random.randint(-1200,-200))
                 bgspeed=3
-                ycobs=3
+                y_change_obstacle=3
                 loop1=True
                 loop2=False
         if exitrect.collidepoint(mousepos):

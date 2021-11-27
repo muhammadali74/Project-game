@@ -52,6 +52,7 @@ car1=pygame.transform.scale(car1,(120,120))
 car2=pygame.transform.scale(car2,(120,120))
 car3=pygame.transform.scale(car3,(120,120))
 temp=pygame.transform.scale(car2,(20,100))
+maincar=car1
 xaxis = 500
 yaxis = 570
 xc=0
@@ -304,7 +305,7 @@ while mainloop:
         if yaxis>=600:
             yaxis=600
         
-        car(car2,temp,xaxis,yaxis)
+        car(maincar,temp,xaxis,yaxis)
         for i in range(obstacle_num):
             obstacle(obs[i],xobs[i],yobs[i])
             yobs[i]+=ycobs
@@ -337,6 +338,8 @@ while mainloop:
             xcoin=random.randint(180,790)
         elif pygame.Rect.colliderect(coinrect,carrect):
             score+=5
+            coinchime=pygame.mixer.Sound('coin chime.mp3')
+            coinchime.play()
             ycoin=random.randint(-100,-20)
             xcoin=random.randint(180,790)
             print('add 5')
