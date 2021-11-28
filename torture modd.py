@@ -20,7 +20,7 @@ pygame.display.set_icon(icon)
 
 #background music
 mixer.init()
-mixer.music.load("Anxiety torture mode.mp3")
+mixer.music.load("./Music/Anxiety torture mode.mp3")
 mixer.music.play(-1)
 
 #canvas background images. bg is short for background
