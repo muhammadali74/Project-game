@@ -1,12 +1,9 @@
 '''Hard mode
 A modified version of Easy mode. With high speeds, more obstacles and walking pedestrians
-Beware: Killing pedistrians is an intolerable crime. Try not to hit them'''
+Beware: Killing pedistrians is an intolerable crime. Try not to hit them
+Note: This is a modified version of Easy mode. Kindly refer to Easy mode first if you haven't, before reading this.'''
 import pygame
 from pygame.locals import *
-import time
-import os
-import sys
-import math
 import random
 from pygame.constants import *
 from pygame.locals import *
@@ -142,24 +139,25 @@ ycobs=5
 for i in range(obstacle_num):
     random_obstacles=random.choice(all_obstacles)
     obs.append(random_obstacles)
-    xobs.append(random.randint(180,790))
+    xobs.append(random.randint(180,840))
     yobs.append(random.randint(-1200,-200))
-    positionx.append(random.randint(180,790))
+    positionx.append(random.randint(180,840))
     positiony.append(random.randint(-1200,-200))
 
 def obstacle(img,xcor,ycor):
     global obsrect
     obsrect=img.get_rect(x=xcor,y=ycor)
     screen.blit(img,(xcor,ycor))
-
+# new person obstacle introduced for hard mode.
 person1=pygame.image.load('person.png')
 person1=pygame.transform.scale(person1,[70,70])
 pson=pygame.transform.scale(person1,[70,70])
 person2=pygame.image.load('person2.png')
 person2=pygame.transform.scale(person2,[70,70])
 people=[person1,person2]
-persona=random.choice(people)
-xperson=180#random.choice([180,790])
+person_random=random.choice(people)
+xperson=180
+x_change_person=6
 yperson=random.randint(-2000,-200)
 
 def personobs(img,xcor,ycor):
@@ -330,10 +328,10 @@ while mainloop:
             xcoin=random.randint(180,790)
             print('add 5')
 
-        personobs(persona,xperson,yperson)
+        personobs(person_random,xperson,yperson)
         yperson+=ycobs
         if xperson<900 and yperson>0:
-            xperson+=6
+            xperson+=x_change_person
         if pygame.Rect.colliderect(personrect,carrect):
             print('Game Over')
             loop1=False
@@ -347,6 +345,7 @@ while mainloop:
             ycobs+=0.01
             bgspeed+=0.01
             carelative+=0.01
+            x_change_person+=0.01
 
         
         if lives<=0:
@@ -355,7 +354,7 @@ while mainloop:
 
         print('|'*lives)
         stat(xfnt,yfnt,score,lives)
-        positionx=[random.randint(180,790) for x in range(obstacle_num)]
+        positionx=[random.randint(180,840) for x in range(obstacle_num)]
         positiony=[random.randint(-1200,-200) for x in range(obstacle_num)]
     
         pygame.display.update()
@@ -394,9 +393,9 @@ while mainloop:
                 for i in range(obstacle_num):
                     random_obstacles=random.choice(all_obstacles)
                     obs.append(random_obstacles)
-                    xobs.append(random.randint(180,790))
+                    xobs.append(random.randint(180,840))
                     yobs.append(random.randint(-1200,-200))
-                    positionx.append(random.randint(180,790))
+                    positionx.append(random.randint(180,840))
                     positiony.append(random.randint(-1200,-200))
                 bgspeed=5
                 ycobs=5

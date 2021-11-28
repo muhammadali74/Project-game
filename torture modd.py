@@ -2,12 +2,10 @@
 This mode is still in development.
 *************WARNING**************
 Please play this mode at your own risk as long exposure on this mode might lead to headaches 
-and could also trigger rage emotions in humans'''
+and could also trigger rage emotions in humans
+Note: This is a modified version of Easy mode. Kindly refer to Easy mode first if you haven't, before reading this.'''
 import pygame
 from pygame.locals import *
-import time
-import os
-import sys
 import random
 from pygame.constants import *
 from pygame.locals import *
@@ -130,8 +128,6 @@ xobs=[]
 yobs=[]
 positionx=[]
 positiony=[]
-# xobs = random.randint(180,790)
-# yobs = -100
 ycobs=random.randint(5,7)
 for i in range(obstacle_num):
     random_obstacles=random.choice(all_obstacles)
@@ -153,8 +149,9 @@ person2=pygame.image.load('person2.png')
 person2=pygame.transform.scale(person2,[70,70])
 people=[person1,person2]
 persona=random.choice(people)
-xperson=180 #random.choice([180,790])
+xperson=180
 yperson=random.randint(-2000,-200)
+x_change_person=6
 
 def personobs(img,xcor,ycor):
     global personrect
@@ -347,7 +344,7 @@ while mainloop:
         personobs(persona,xperson,yperson)
         yperson+=ycobs
         if xperson<900 and yperson>0:
-            xperson+=6
+            xperson+=x_change_person
         if pygame.Rect.colliderect(personrect,carrect):
             print('Game Over')
             loop1=False
@@ -361,6 +358,7 @@ while mainloop:
             xs=random.uniform(0.1,0.5)
             ycobs+=random.uniform(0.1,0.5)
             bgspeed+=xs
+            x_change_person+=xs
             carelative+=xs
 
             mainbackground=bg2

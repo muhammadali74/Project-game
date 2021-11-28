@@ -4,9 +4,6 @@ The other two difficulty levels are the modified versions of this mode.
 For understanding the code. Refer to this file first before reading the other two mode files'''
 import pygame
 from pygame.locals import *
-import time
-import os
-import sys
 import random
 from pygame.constants import *
 from pygame.locals import *
@@ -138,14 +135,14 @@ x_obstacle=[]
 y_obstacle=[]
 random_positionx=[]
 random_positiony=[]
-# yc stands for Y Change
+# y_change stands for change in y cordinate
 y_change_obstacle=3
 for i in range(obstacle_num):
     random_obstacles=random.choice(all_obstacles)
     obs.append(random_obstacles)
-    x_obstacle.append(random.randint(180,790))
+    x_obstacle.append(random.randint(180,840))
     y_obstacle.append(random.randint(-1200,-200))
-    random_positionx.append(random.randint(180,790))
+    random_positionx.append(random.randint(180,840))
     random_positiony.append(random.randint(-1200,-200))
 
 #blitting obstacles on screen and getting its cordinates for collission detection
@@ -171,8 +168,6 @@ bullet=pygame.image.load('bullet.png') #source: flaticon.com
 bullet=pygame.transform.scale(bullet,(28,28))
 x_bullet=0
 y_bullet=yaxis
-#xc means x change
-#yc means y change
 x_change_bullet=0
 y_change_bullet=-10
 bullet_state='hold'
@@ -199,7 +194,6 @@ def stat(xcor,ycor,score,lives):
     life=fnt.render('Health: '+ ('|'*(lives//2)),True,(255,255,255))
     screen.blit(status,(xcor,ycor))
     screen.blit(life,(xfnt,yfnt+30))
-# pygame.time.set_timer(USEREVENT+1,500)
 
 #boolean variables needed for maintaning flow of game
 loop1=True
@@ -337,9 +331,9 @@ while mainloop:
 
         #for increasing game speed after user reaches a threshlod value
         if score%20==0 and score!=0:
-            y_change_obstacle+=0.01
-            bgspeed+=0.01
-            carelative+=0.01
+            y_change_obstacle+=0.025
+            bgspeed+=0.025
+            carelative+=0.025
 
         # exit if health is zero
         if lives<=0:
@@ -348,7 +342,7 @@ while mainloop:
         #print('|'*lives)
         stat(xfnt,yfnt,score,lives)
         #assigning new random positions to obstacles
-        random_positionx=[random.randint(180,790) for x in range(obstacle_num)]
+        random_positionx=[random.randint(180,840) for x in range(obstacle_num)]
         random_positiony=[random.randint(-1200,-200) for x in range(obstacle_num)]
         
 
