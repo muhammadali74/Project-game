@@ -91,6 +91,7 @@ buttonretry2=pygame.image.load('buttons2.png')
 buttonexit=pygame.image.load('buttonexit.png')
 buttonexit2=pygame.image.load('buttonexit2.png')
 
+#adjusting button size
 buttonretry=pygame.transform.scale(buttonretry,(190,69))
 buttonretry2=pygame.transform.scale(buttonretry2,(190,69))
 buttonexit=pygame.transform.scale(buttonexit,(190,69))
@@ -279,7 +280,8 @@ while mainloop:
                     xc=0
                 if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
                     yc=0
-                    
+         
+        # ensuring car stays on the road
         xaxis+=xc
         yaxis+=yc
         if xaxis<=180:
@@ -381,6 +383,7 @@ while mainloop:
         #for checking if mouse hover and/or clicks the button image
         if buttonrect.collidepoint(mousepos):
             retrybutton(buttonretry2,870,520)
+            # [0] represents left clicks
             if pygame.mouse.get_pressed()[0]==1 and click==False:
                 #resetting game settings
                 score=0
