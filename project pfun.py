@@ -219,7 +219,7 @@ while mainloop:
         bgY2 +=bgspeed
         clock.tick(fps)
 
-        if bullet_state is 'fire':
+        if bullet_state == 'fire':
             goli(bullet,xbullet,ybullet)
             ybullet+=ycbullet
         if ybullet<=0:
