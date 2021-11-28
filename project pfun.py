@@ -34,7 +34,7 @@ bg=pygame.image.load('bgcompressed.jpeg')
 bg2=pygame.image.load('Road pic 1 filter.jpg')
 bg=pygame.transform.scale(bg,(1080,720))
 bg2=pygame.transform.scale(bg2,(1080,720))
-bgY=0
+bgY=0 
 bgY2=bg.get_height()
 mainbackground=bg
 

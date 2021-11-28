@@ -136,9 +136,9 @@ ycobs=random.randint(5,7)
 for i in range(obstacle_num):
     random_obstacles=random.choice(all_obstacles)
     obs.append(random_obstacles)
-    xobs.append(random.randint(180,790))
+    xobs.append(random.randint(180,830))
     yobs.append(random.randint(-1200,-200))
-    positionx.append(random.randint(180,790))
+    positionx.append(random.randint(180,830))
     positiony.append(random.randint(-1200,-200))
 
 def obstacle(img,xcor,ycor):
@@ -298,8 +298,8 @@ while mainloop:
         yaxis+=yc
         if xaxis<=180:
             xaxis=180
-        if xaxis>=790:
-            xaxis=790
+        if xaxis>=770:
+            xaxis=770
         if yaxis<=40:
             yaxis=40
         if yaxis>=600:
