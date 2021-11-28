@@ -110,7 +110,7 @@ while run2:
             screen.blit(hard_img,(120,300))
             if pygame.mouse.get_pressed()[0]==1 and click==False:
                 mixer.music.set_volume(0)
-                execfile('project pfun.py')
+                execfile('Hardmode.py')
                 break
 
     elif torture_rect.collidepoint(mousepos):
