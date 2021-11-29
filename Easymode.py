@@ -14,7 +14,7 @@ pygame.init()
 pygame.display.init
 screen=pygame.display.set_mode([1080,720],HWSURFACE | DOUBLEBUF | RESIZABLE)
 caption=pygame.display.set_caption('Delta SpeedRun')
-icon=pygame.image.load('racing.png')
+icon=pygame.image.load('./Misc/racing.png')
 pygame.display.set_icon(icon)
 
 #background music
@@ -42,9 +42,9 @@ def redrawWindow(background):
     #pygame.display.update()
 
 
-car1=pygame.image.load('car.png')       #<div>Icons made by <a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-car2=pygame.image.load('car2.png')      #<div>Icons made by <a href="https://www.flaticon.com/authors/berkahicon" title="berkahicon">berkahicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-car3=pygame.image.load('car3.png')      #<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+car1=pygame.image.load('./Cars/car.png')       #<div>Icons made by <a href="https://www.flaticon.com/authors/mynamepong" title="mynamepong">mynamepong</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+car2=pygame.image.load('./Cars/car2.png')      #<div>Icons made by <a href="https://www.flaticon.com/authors/berkahicon" title="berkahicon">berkahicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+car3=pygame.image.load('./Cars/car3.png')      #<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 #<a href="https://www.vecteezy.com/free-vector/car">Car Vectors by Vecteezy</a>
 
@@ -82,10 +82,10 @@ def game_over_text():
     screen.blit(score_text, (200, 450))
 
 #loading button images
-buttonretry=pygame.image.load('buttons.png')
-buttonretry2=pygame.image.load('buttons2.png')
-buttonexit=pygame.image.load('buttonexit.png')
-buttonexit2=pygame.image.load('buttonexit2.png')
+buttonretry=pygame.image.load('./buttons/buttons.png')
+buttonretry2=pygame.image.load('./buttons/buttons2.png')
+buttonexit=pygame.image.load('./buttons/buttonexit.png')
+buttonexit2=pygame.image.load('./buttons/buttonexit2.png')
 
 buttonretry=pygame.transform.scale(buttonretry,(190,69))
 buttonretry2=pygame.transform.scale(buttonretry2,(190,69))
@@ -103,16 +103,16 @@ def exitbutton(img,xcor,ycor):
     screen.blit(img,(xcor,ycor))
 
 #loading obstacles images. obs is short for obstacles
-obs1=pygame.image.load('tree1.png') #obstacle tree <a href="https://www.vecteezy.com/free-vector/tree">Tree Vectors by Vecteezy</a>
-obs2=pygame.image.load('tree2.png')
-obs3=pygame.image.load('tree3.png')
-obs4=pygame.image.load('tree4.png')
-obs5=pygame.image.load('tree5.png')
-obs6=pygame.image.load('cones.png')
-obs7=pygame.image.load('traffic-barriers.png') #Source: flaticon.com
-obs8=pygame.image.load('barrier.png')   #Source: flaticon.com
-obs9=pygame.image.load('ditch.png') #Source: flaticon.com
-obs10=pygame.image.load('obstacle-hole.png')    #Source: flaticon.com
+obs1=pygame.image.load('./Obstacles/tree1.png') #obstacle tree <a href="https://www.vecteezy.com/free-vector/tree">Tree Vectors by Vecteezy</a>
+obs2=pygame.image.load('./Obstacles/tree2.png')
+obs3=pygame.image.load('./Obstacles/tree3.png')
+obs4=pygame.image.load('./Obstacles/tree4.png')
+obs5=pygame.image.load('./Obstacles/tree5.png')
+obs6=pygame.image.load('./Obstacles/cones.png')
+obs7=pygame.image.load('./Obstacles/traffic-barriers.png') #Source: flaticon.com
+obs8=pygame.image.load('./Obstacles/barrier.png')   #Source: flaticon.com
+obs9=pygame.image.load('./Obstacles/ditch.png') #Source: flaticon.com
+obs10=pygame.image.load('./Obstacles/obstacle-hole.png')    #Source: flaticon.com
 
 #resizing obstacles
 obs1=pygame.transform.scale(obs1,(54,54))
@@ -152,7 +152,7 @@ def obstacle(img,xcor,ycor):
     screen.blit(img,(xcor,ycor))
 
 #loading coin reward image and setting its random cordinates
-coin=pygame.image.load('dollar.png')#<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>#
+coin=pygame.image.load('./Misc/dollar.png')#<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>#
 coin=pygame.transform.scale(coin,(30,30))
 xcoin=random.randint(180,790)
 ycoin=random.randint(-1200,-200)
@@ -164,7 +164,7 @@ def coinreward(pic,xcor,ycor):
     screen.blit(pic,(xcor,ycor))
 
 #loading bullet image and setting its initial cordinates, and state.
-bullet=pygame.image.load('bullet.png') #source: flaticon.com
+bullet=pygame.image.load('./Misc/bullet.png') #source: flaticon.com
 bullet=pygame.transform.scale(bullet,(28,28))
 x_bullet=0
 y_bullet=yaxis
