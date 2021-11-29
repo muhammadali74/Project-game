@@ -19,16 +19,16 @@ pygame.display.set_icon(icon)
 
 #background music
 mixer.init()
-mixer.music.load("intromusic.mp3")
+mixer.music.load("./Music/intromusic.mp3")
 mixer.music.play(-1)
 
 #canvas background images. bg is short for background
 fps=60
 clock=pygame.time.Clock()
-gameoverwallpaper=pygame.image.load('gameoverwallpaper.jpg')
+gameoverwallpaper=pygame.image.load('./backgrounds/gameoverwallpaper.jpg')
 gameoverwallpaper=pygame.transform.scale(gameoverwallpaper,(1080,720))
-bg=pygame.image.load('bgcompressed.jpeg')  #Downlaoded from a copyright free source. 
-bg2=pygame.image.load('Road pic 1 filter.jpg')
+bg=pygame.image.load('./backgrounds/bgcompressed.jpeg')  #Downlaoded from a copyright free source. 
+bg2=pygame.image.load('./backgrounds/Road pic 1 filter.jpg')
 bg=pygame.transform.scale(bg,(1080,720))
 bg2=pygame.transform.scale(bg2,(1080,720))
 bgY=0
@@ -234,12 +234,12 @@ while mainloop:
                     loop1=False
                 if event.key==pygame.K_LEFT:
                     x_change=carelative*-1
-                    tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
+                    tyrescreechSound=pygame.mixer.Sound('./Music/tyrescreech1.mp3')
                     tyrescreechSound.set_volume(0.2)
                     tyrescreechSound.play()
                 if event.key==pygame.K_RIGHT:
                     x_change=carelative
-                    tyrescreechSound=pygame.mixer.Sound('tyrescreech1.mp3')
+                    tyrescreechSound=pygame.mixer.Sound('./Music/tyrescreech1.mp3')
                     tyrescreechSound.set_volume(0.2)
                     tyrescreechSound.play()
                 if event.key==pygame.K_UP:
@@ -249,21 +249,17 @@ while mainloop:
                 if event.key==pygame.K_SPACE and bullet_state=='hold':
                     x_bullet=xaxis
                     gun(bullet, x_bullet,y_bullet)
-                    laserSound=pygame.mixer.Sound("laser.wav")
+                    laserSound=pygame.mixer.Sound("./Music/laser.wav")
                     laserSound.play()
-                if event.key==pygame.K_1:
-                    mainbackground=bg
-                if event.key==pygame.K_2:
-                    mainbackground=bg2
-                if event.key==pygame.K_3:
-                    pass
-                if event.key==pygame.K_4:
-                    pass
                 if event.key==pygame.K_q:
-                    maincar=car1
+                    mainbackground=bg
                 if event.key==pygame.K_w:
+                    mainbackground=bg2
+                if event.key==pygame.K_1:
+                    maincar=car1
+                if event.key==pygame.K_2:
                     maincar=car2
-                if event.key==pygame.K_e:
+                if event.key==pygame.K_3:
                     maincar=car3
             
             if event.type==pygame.KEYUP:
@@ -300,12 +296,12 @@ while mainloop:
             #for detecting collision between car and obstacle
             if pygame.Rect.colliderect(carrect,obsrect):
                 lives-=1
-                carcrashSound=pygame.mixer.Sound('carcrash.mp3')
+                carcrashSound=pygame.mixer.Sound('./Music/carcrash.mp3')
                 carcrashSound.play()
             #for detecting collision between bullet and obstacle
             if pygame.Rect.colliderect(bulrect,obsrect) and bullet_state=='fire':
-                explosionSound=pygame.mixer.Sound('explosion.wav')
-                woodcrashSound=pygame.mixer.Sound('woodcrash.mp3')
+                explosionSound=pygame.mixer.Sound('./Music/explosion.wav')
+                woodcrashSound=pygame.mixer.Sound('./Music/woodcrash.mp3')
                 randomsound=random.choice([explosionSound,woodcrashSound])
                 randomsound.play()
                 y_obstacle[i]=random_positiony[i]
@@ -323,7 +319,7 @@ while mainloop:
         #for detecting collision between car and coin
         elif pygame.Rect.colliderect(coinrect,carrect):
             score+=5
-            coinchime=pygame.mixer.Sound('coin chime.mp3')
+            coinchime=pygame.mixer.Sound('./Music/coin chime.mp3')
             coinchime.play()
             ycoin=random.randint(-100,-20)
             xcoin=random.randint(180,790)
