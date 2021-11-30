@@ -50,6 +50,16 @@ torture_img1=pygame.transform.scale(torture_img1, (190, 69))
 #initializing clock for frame rate
 clock=pygame.time.Clock()
 
+def execfiles(filepath, globals=None, locals=None):  # This function is written using the snippet from https://newbedev.com/what-is-an-alternative-to-execfile-in-python-3
+    if globals is None:
+        globals = {}
+    globals.update({
+        "__file__": filepath,
+        "__name__": "__main__",
+    })
+    with open(filepath, 'rb') as file:
+        exec(compile(file.read(), filepath, 'exec'), globals, locals)
+
 run=True
 run2=True
 while run:
@@ -120,21 +130,21 @@ while run2:
             screen.blit(easy_img,(120,200))
             if pygame.mouse.get_pressed()[0]==1 and click==False:
                 mixer.music.set_volume(0)
-                execfile('Easymode.py')
+                execfiles('Easymode.py')
                 break
 
     elif hard_rect.collidepoint(mousepos):
             screen.blit(hard_img,(120,300))
             if pygame.mouse.get_pressed()[0]==1 and click==False:
                 mixer.music.set_volume(0)
-                execfile('Hardmode.py')
+                execfiles('Hardmode.py')
                 break
 
     elif torture_rect.collidepoint(mousepos):
             screen.blit(torture_img,(120,400))
             if pygame.mouse.get_pressed()[0]==1 and click==False:
                 mixer.music.set_volume(0)
-                execfile('torture modd.py')
+                execfiles('torture modd.py')
                 break
 
     pygame.display.update()
