@@ -2,6 +2,8 @@ import pygame
 from pygame.locals import *
 from pygame.constants import MOUSEBUTTONDOWN
 
+NOT WORKING
+
 # displaying background and capttion
 pygame.init()
 pygame.display.init
