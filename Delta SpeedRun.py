@@ -24,6 +24,11 @@ mixer.init()
 mixer.music.load("./Music/bgmusic.mp3")
 mixer.music.play(-1)
 
+#sound when button is clicked
+sound=pygame.mixer.Sound("./Music/button-3.mp3")
+def button_click():
+    sound.play()
+
 #loading button images
 start_img = pygame.image.load('./buttons/buttonstart.png')
 start_img1 = pygame.image.load('./buttons/buttonstart1.png')
@@ -80,6 +85,7 @@ while run:
             screen.blit(exit_img1,(470,400))
             #exit the game if exit is clicked
             if pygame.mouse.get_pressed()[0]==1 and click==False:
+                button_click()
                 run2=False
                 run=False
     #check if mouse hovers over the start button
@@ -88,6 +94,7 @@ while run:
             screen.blit(start_img,(470,300))
             #terminate this loop the game if start is clicked
             if pygame.mouse.get_pressed()[0]==1 and click==False:
+                button_click()
                 run2=True
                 run=False
     for event in pygame.event.get():
@@ -129,6 +136,7 @@ while run2:
     if easy_rect.collidepoint(mousepos):
             screen.blit(easy_img,(120,200))
             if pygame.mouse.get_pressed()[0]==1 and click==False:
+                button_click()
                 mixer.music.set_volume(0)
                 execfiles('Easymode.py')
                 break
@@ -136,6 +144,7 @@ while run2:
     elif hard_rect.collidepoint(mousepos):
             screen.blit(hard_img,(120,300))
             if pygame.mouse.get_pressed()[0]==1 and click==False:
+                button_click()
                 mixer.music.set_volume(0)
                 execfiles('Hardmode.py')
                 break
@@ -143,6 +152,7 @@ while run2:
     elif torture_rect.collidepoint(mousepos):
             screen.blit(torture_img,(120,400))
             if pygame.mouse.get_pressed()[0]==1 and click==False:
+                button_click()
                 mixer.music.set_volume(0)
                 execfiles('torture modd.py')
                 break
@@ -150,5 +160,3 @@ while run2:
     pygame.display.update()
 
 pygame.quit()    
-
-
