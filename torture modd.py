@@ -397,6 +397,8 @@ while mainloop:
             retrybutton(buttonretry2,870,520)
             if pygame.mouse.get_pressed()[0]==1 and click==False:
                 #resetting game settings
+                sound=pygame.mixer.Sound("./Music/button-3.mp3")
+                sound.play()
                 score=0
                 lives=200
                 xaxis=500

@@ -380,6 +380,8 @@ while mainloop:
             retrybutton(buttonretry2,870,520)
             # [0] represents left clicks
             if pygame.mouse.get_pressed()[0]==1 and click==False:
+                sound=pygame.mixer.Sound("./Music/button-3.mp3")
+                sound.play()
                 #resetting game settings
                 score=0
                 lives=200
