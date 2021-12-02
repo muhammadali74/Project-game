@@ -229,11 +229,12 @@ while mainloop:
         if ybullet<=0:
             bullet_state='hold'
             ybullet=yaxis
-        
+        #shifting the image vertically
         if bgY>=bg.get_height():               #RESETTING BACKGROUND
             bgY=bg.get_height()*-1
         if bgY2>=bg.get_height():
             bgY2=bg.get_height()*-1
+        #shifting the image horizontally
         if bgX>10:
             bgXspeed=-5
         if bgX<0:
